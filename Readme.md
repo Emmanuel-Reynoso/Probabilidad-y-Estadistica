@@ -4,4 +4,4 @@ Las respuestas a los practicos se encuentan en formato jupyter notebook. Las res
 
 Leer los ejercicios previamente originales es necesario.
 
-(practico 1)[https://drive.google.com/file/d/1X4ZGeWQ1vZYP2aSQvWfEOVqeW-tZedKD/view?usp=sharing]
+!(practico 1)[https://drive.google.com/file/d/1X4ZGeWQ1vZYP2aSQvWfEOVqeW-tZedKD/view?usp=sharing]
