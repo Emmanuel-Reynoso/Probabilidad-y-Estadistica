@@ -1,6 +1,7 @@
 
 import matplotlib.pylab as plt
 import numpy as np
+import math
 
 def ej2():
 	#Procesamos los datos
@@ -142,14 +143,22 @@ def ej8():
 def media(x):
 	return sum(x)/len(x)
 
+def mediana(x):
+	if len(x)%2==0:
+		i = int(len(x)/2)
+		return (x[i]+x[i-1])/2
+	else:
+		i = int(len(x)/2)
+		return x[i]
+
 def varianza(x):
 	ans = 0
 	for i in x:
-		ans += (x[i] - media(x))**2
+		ans += (i - media(x))**2
 	return ans
 
 def desvio(x):
-	return sqrt(varianza(x))
+	return np.sqrt(varianza(x))
 
 def ej11():
 	control = [1202.6, 830.1, 372.4, 345.5, 321.2, 244.3, 163, 147.8, 95, 87, 81.2, 68.5, 47.3, 41.1, 36.6, 29.0, 28.6, 26.3, 26.1, 24.4, 21.7, 17.3, 11.5, 4.9, 4.9, 1]
@@ -170,19 +179,19 @@ def ej11():
 	sq1 = sembradas[int(0.25*len(sembradas))]
 	sq3 = sembradas[int(0.75*len(sembradas))]
 	print("a)")
-	print("maximo control: ", cmax)
-	print("minimo control: ", cmin)
-	print("rango control: ", crange)
-	print("promedio control: ", cmedia)
-	print("desvio estandar control: ", cdesvio)
-	print("Q1 control:", cq1,"Q3 control:", cq3)
+	print("maximo control: ","%.3f" % cmax)
+	print("minimo control: ", "%.3f" % cmin)
+	print("rango control: ", "%.3f" % crange)
+	print("promedio control: ", "%.3f" % cmedia)
+	print("desvio estandar control: ", "%.3f" % cdesvio)
+	print("Q1 control:", "%.3f" % cq1,"Q3 control:", "%.3f" % cq3)
 	print("-----------------------------------")
-	print("maximo sembradas: ", smax)
-	print("minimo sembradas: ", smin)
-	print("rango sembradas: ", srange)
-	print("promedio sembradas: ", smedia)
-	print("desvio estandar sembradas: ", sdesvio)
-	print("Q1 sembradas:", sq1,"Q3 sembradas:", sq3)
+	print("maximo sembradas: ", "%.3f" % smax)
+	print("minimo sembradas: ", "%.3f" % smin)
+	print("rango sembradas: ", "%.3f" % srange)
+	print("promedio sembradas: ", "%.3f" % smedia)
+	print("desvio estandar sembradas: ", "%.3f" % sdesvio)
+	print("Q1 sembradas:", "%.3f" % sq1,"Q3 sembradas:", "%.3f" % sq3)
 	print("")
 	print("b)")
 	fig, cajas = plt.subplots(2)     
@@ -198,4 +207,63 @@ def ej11():
 	
 def ej12():
 	IDT = [13.7, 15.5, 16.8, 17.40, 17.9, 18.6, 19.1, 19.5, 20.7, 21, 21.1, 21.4, 21.4, 22.3, 23.7, 25.5, 25.8, 26.2, 26.6, 28, 28.1, 28.9, 30.6, 31.2, 31.90, 32, 34.8, 36.3, 38.4, 38.8, 40.9, 43.5, 46, 48.9, 52.1, 55.6, 57.3, 60.1, 62.3, 72.8]
-	ln_IDT = map(np.log,IDT)
+	ln_IDT = list(map(np.log,IDT))
+	
+	solve12(IDT, "IDT", 10, 10)
+	print("-----------------------------")
+	solve12(ln_IDT, "ln_IDT", 0.4, 2.5)
+
+def solve12(arr, name, interval, start):
+
+	print("a)")
+	print("maximo",name,":", "%.3f" % max(arr))
+	print("minimo",name,":", "%.3f" % min(arr))
+	print("rango",name,":","%.3f" % (max(arr) - min(arr)))
+	print("promedio",name,":","%.3f" % media(arr))
+	print("mediana",name,":","%.3f" % mediana(arr))
+	print("desvio estandar",name,":","%.3f" % desvio(arr))
+
+	num_inter = math.ceil((max(arr)-start)/interval)
+	frec = [0] * num_inter
+	for el in arr:
+		i = int((el-start)/interval)
+		frec[i] = frec[i]+1
+
+	abso = [0] * num_inter
+	acum = 0
+	for i in range(0, len(frec)):
+		acum+= frec[i]
+		abso[i] = acum
+
+	tix = [start] * num_inter
+	for i in range(1, len(tix)):
+		tix[i] += interval*i
+
+	fig, graficos = plt.subplots(2)     
+	fig.set_size_inches(5, 7)
+	graficos[0].set_title(name+' - Frecuencia Relativa')
+	graficos[1].set_title(name + ' - Frecuencia Absoluta')
+	graficos[0].bar(range(len(frec)), frec, align='center')
+	graficos[1].bar(range(len(frec)), abso, align='center')
+	graficos[0].set_xticks(range(len(frec)))
+	graficos[1].set_xticks(range(len(frec)))
+	graficos[0].set_xticklabels(tix)
+	graficos[1].set_xticklabels(tix)
+	graficos[0].grid(axis='y')
+	graficos[1].grid(axis='y')
+	plt.show()
+
+	plt.title(name+" - Boxplot")
+	plt.grid(axis='y')
+	plt.boxplot(arr)
+	plt.show()
+
+	print("g) ")
+	for i in range(1,4):
+		left = media(arr) - i * desvio(arr)
+		right = media(arr) + i * desvio(arr)
+		ans = 0
+		for el in arr:
+			if left <= el and el <= right:
+				ans = ans + 1
+		print("hay un", int((ans/len(arr))*100), "% con k =", i, "entre","%.3f" % left, "y","%.3f" % right)
