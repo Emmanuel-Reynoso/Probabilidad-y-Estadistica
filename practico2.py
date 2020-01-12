@@ -21,3 +21,4 @@ def varianza(x):
 
 def desvio(x):
 	return np.sqrt(varianza(x))
+

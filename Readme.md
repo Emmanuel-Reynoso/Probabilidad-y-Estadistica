@@ -4,5 +4,5 @@ Las respuestas a los practicos se encuentan en formato jupyter notebook (los arc
 
 Leer los ejercicios originales previamente es necesario. 
 
-[practico 1](https://drive.google.com/open?id=1X4ZGeWQ1vZYP2aSQvWfEOVqeW-tZedKD)
+[practico 1](https://drive.google.com/open?id=1X4ZGeWQ1vZYP2aSQvWfEOVqeW-tZedKD)  
 [practico 2](https://drive.google.com/open?id=1N98T6xU6Girdz2Ngt9CzE8Mjy97uICZ6)
