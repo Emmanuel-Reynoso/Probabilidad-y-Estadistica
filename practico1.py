@@ -14,6 +14,8 @@ def ej2():
 	for k in frec[0].keys():
 		acumulada += frec[0][k]
 		frec[1][k] = acumulada
+	print("Frecuencia relativa: ", frec[0])
+	print("Frecuencia Absoluta: ", frec[1])
 	#Graficamos
 	fig, graficos = plt.subplots(2)     
 	fig.set_size_inches(5, 6.5)
@@ -136,3 +138,64 @@ def ej8():
 	pc = 87.3 * (9/5) + 32
 	dc = (9/5)*(9/5)* 1.04
 	print("iii) promedio = ","%.3f" % pc,"y desviacion =","%.3f" % dc)
+
+def media(x):
+	return sum(x)/len(x)
+
+def varianza(x):
+	ans = 0
+	for i in x:
+		ans += (x[i] - media(x))**2
+	return ans
+
+def desvio(x):
+	return sqrt(varianza(x))
+
+def ej11():
+	control = [1202.6, 830.1, 372.4, 345.5, 321.2, 244.3, 163, 147.8, 95, 87, 81.2, 68.5, 47.3, 41.1, 36.6, 29.0, 28.6, 26.3, 26.1, 24.4, 21.7, 17.3, 11.5, 4.9, 4.9, 1]
+	sembradas = [2745.6, 1697.8, 1656, 978, 703.4, 489.1, 430, 334.1, 302.8, 274.7, 274.7, 255, 242.5, 200.7, 198.6, 129.6, 119, 118.3, 115.3, 92.4, 40.6, 32.7, 31.4, 17.5, 7.7, 4.1]
+
+	cmax = max(control)
+	smax = max(sembradas)
+	cmin = min(control)
+	smin = min(sembradas)
+	crange = cmax - cmin
+	srange = smax - smin
+	cmedia = sum(control)/len(control)
+	smedia = sum(sembradas)/len(sembradas)
+	cdesvio = desvio(control)
+	sdesvio = desvio(sembradas)
+	cq1 = control[int(0.25*len(control))]
+	cq3 = control[int(0.75*len(control))]
+	sq1 = sembradas[int(0.25*len(sembradas))]
+	sq3 = sembradas[int(0.75*len(sembradas))]
+	print("a)")
+	print("maximo control: ", cmax)
+	print("minimo control: ", cmin)
+	print("rango control: ", crange)
+	print("promedio control: ", cmedia)
+	print("desvio estandar control: ", cdesvio)
+	print("Q1 control:", cq1,"Q3 control:", cq3)
+	print("-----------------------------------")
+	print("maximo sembradas: ", smax)
+	print("minimo sembradas: ", smin)
+	print("rango sembradas: ", srange)
+	print("promedio sembradas: ", smedia)
+	print("desvio estandar sembradas: ", sdesvio)
+	print("Q1 sembradas:", sq1,"Q3 sembradas:", sq3)
+	print("")
+	print("b)")
+	fig, cajas = plt.subplots(2)     
+	fig.set_size_inches(5, 7.5)
+	cajas[0].set_title('Control')
+	cajas[1].set_title('Sembradas')
+	cajas[0].grid(axis='y')
+	cajas[1].grid(axis='y')
+	cajas[0].boxplot(control)
+	cajas[1].boxplot(sembradas)
+	
+	plt.show()
+	
+def ej12():
+	IDT = [13.7, 15.5, 16.8, 17.40, 17.9, 18.6, 19.1, 19.5, 20.7, 21, 21.1, 21.4, 21.4, 22.3, 23.7, 25.5, 25.8, 26.2, 26.6, 28, 28.1, 28.9, 30.6, 31.2, 31.90, 32, 34.8, 36.3, 38.4, 38.8, 40.9, 43.5, 46, 48.9, 52.1, 55.6, 57.3, 60.1, 62.3, 72.8]
+	ln_IDT = map(np.log,IDT)
