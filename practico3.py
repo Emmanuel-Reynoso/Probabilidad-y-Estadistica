@@ -53,10 +53,36 @@ def nCr(n, m):
 	ans = fact(n) / (fact(m) * fact(n-m))
 	return ans
 
-def binomial_probt(casos, exito):
+def binomial_probt(casos, exito, acumulada=False):
 	ans = [0] * (casos+1)
+	acum = 0
 	for i in range(0,casos+1):
-		ans[i] = nCr(casos,i) * exito**i * (1-exito)**(casos-i)
+		if acumulada:
+			acum += nCr(casos,i) * exito**i * (1-exito)**(casos-i)
+			ans[i] = acum
+		else: 
+			ans[i] = nCr(casos,i) * exito**i * (1-exito)**(casos-i)
+	ans = dict(zip(range(0,casos+1),ans))
+	return ans
+
+def hypergeo_probt(casos,exitos,selec, acumulada=False):
+	ans = [0] * (exitos+1)
+	fracasos = casos - exitos
+	acum = 0
+	for i in range(0, exitos+1):
+		if acumulada:
+			if fracasos < (selec-i):
+				acum += 0
+				ans[i] = acum
+			else:
+				acum += nCr(exitos,i)*nCr(fracasos,(selec-i))/nCr(casos,selec)
+				ans[i] = acum
+		else: 
+			if fracasos < (selec-i):
+				ans[i] = 0
+			else:
+				ans[i] = nCr(exitos,i)*nCr(fracasos,(selec-i))/nCr(casos,selec)
+	ans = dict(zip(range(0,exitos+1),ans))
 	return ans
 
 def ej6():
@@ -124,7 +150,7 @@ def ej8():
 	ansb = 0
 	for i in range(4,9):
 		ansb += prob[i]
-	print("   P("+str(left)+"<=X<="+str(right)+") =","%.2f"%ansb)
+	print("   P("+str(left)+"<=X<="+str(right)+") =","%.3f"%ansb)
 
 	
 	ansc = 0
@@ -132,4 +158,33 @@ def ej8():
 		ansc += prob[i]
 	for i in range(0,4):
 		ansc += prob[i]
-	print("c)", "%.2f"%(1-ansc))
+	print("c)", "%.3f"%(1-ansc))
+
+def ej9():
+	congar = binomial_probt(20, 0.2)
+	singar = binomial_probt(20, 0.8)
+
+	print("a) E(Sin Garantia) =", "%.3f"%E(singar))
+	print("b) E(Garantia) =", "%.3f"%E(congar))
+	
+	ansc = 0
+	for i in range(0,6):
+		ansc += congar[i]
+	print("c) P(5) =", "%.3f"%ansc)
+
+	prob_d = hypergeo_probt(12,4,5)
+	print("d) E(X) =", "%.3f"%E(prob_d),"y V(X) =", "%.3f"%V(prob_d))
+
+def ej10():
+	prob = hypergeo_probt(10, 7, 6)
+	prob_acum =  hypergeo_probt(10, 7, 6, True)
+
+	print("i)", prob[1])
+	
+	ansii = prob_acum[6] - prob_acum[3]
+	print("ii)","%.3f"%ansii)
+	
+	ansiii = prob_acum[5] - prob_acum[2]
+	print("iii)","%.3f"%ansiii)
+
+	print("b) E(X) =", "%.3f"%E(prob),"y V(X) =", "%.3f"%V(prob))
