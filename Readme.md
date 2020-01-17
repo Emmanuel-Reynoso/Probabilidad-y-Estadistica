@@ -1,6 +1,6 @@
-Reimaginacion del practico, adaptado para poder digitalizarlo/visualizarlo.
+Reimaginación del práctico, adaptado para poder digitalizarlo/visualizarlo.
 
-Las respuestas a los practicos se encuentan en formato jupyter notebook (los archivos *.ipynb*). Las resoluciones estan en los archivos *.py*, pero no recomiendo pelear contra el codigo porque lo hice para ir resolviendo los ejercicios improvisadamente, no es mi intencion mantenerlo o hacerlo mas simple/comprensible.
+Las respuestas a los prácticos se encuentan en formato jupyter notebook (los archivos *.ipynb*). el razonamiento de algunas resoluciones se encuentra en los archivos *.py*, pero no recomiendo pelear contra el código porque lo hice para ir resolviendo los ejercicios improvisadamente, no es mi intención mantenerlo o hacerlo mas simple/comprensible.
 
 Leer los ejercicios originales previamente es necesario. 
 

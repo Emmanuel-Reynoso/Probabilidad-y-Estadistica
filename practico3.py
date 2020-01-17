@@ -85,6 +85,18 @@ def hypergeo_probt(casos,exitos,selec, acumulada=False):
 	ans = dict(zip(range(0,exitos+1),ans))
 	return ans
 
+def NB_probt(exitos, prob, maxk = 100, acumulada=False):
+	ans = [0] * (maxk+1)
+	acum = 0
+	for i in range(0,maxk+1):
+		if acumulada:
+			acum += nCr(exitos+i-1, exitos-1) * prob**exitos * (1-prob)**i
+			ans[i] = acum
+		else: 
+			ans[i] = nCr(exitos+i-1, exitos-1) * prob**exitos * (1-prob)**i
+	ans = dict(zip(range(0,maxk+1),ans))
+	return ans
+
 def ej6():
 	datos = {13.5:0.2, 15.9:0.5, 19.1:0.3}
 
@@ -188,3 +200,15 @@ def ej10():
 	print("iii)","%.3f"%ansiii)
 
 	print("b) E(X) =", "%.3f"%E(prob),"y V(X) =", "%.3f"%V(prob))
+
+def ej11():
+	print("a) Utilizando una Binomial Negativa X~B-(2,0.5)")
+	print("p(x) = nCr(2+x-1, 2-1) * 0.5**2 * 0.5**x = (x+1) * 0.5**(x+2)")
+
+	datos = NB_probt(2,0.5)
+	print("b)", "%.3f"%datos[2])
+
+	ansc = datos[0] + datos[1] + datos[2]  
+	print("c)","%.3f"%ansc)
+
+	print("d) varones esperados =", E(datos),",total de hijos esperados =", 2+E(datos))
