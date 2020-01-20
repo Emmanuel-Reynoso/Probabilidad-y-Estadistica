@@ -20,7 +20,10 @@ def varianza(x):
 	return ans
 
 def desvio(x):
-	return np.sqrt(varianza(x))
+	if isinstance(x, dict):
+		return np.sqrt(V(x))		
+	else:
+		return np.sqrt(varianza(x))
 
 def E(x):
 	ans = 0
@@ -95,6 +98,18 @@ def NB_probt(exitos, prob, maxk = 100, acumulada=False):
 		else: 
 			ans[i] = nCr(exitos+i-1, exitos-1) * prob**exitos * (1-prob)**i
 	ans = dict(zip(range(0,maxk+1),ans))
+	return ans
+
+def poisson_probt(lam, acumulada=False):
+	ans = [0] * 33
+	acum = 0
+	for i in range (0, 33):
+		if acumulada:
+			acum += math.e**-lam * lam**i / fact(i)
+			ans[i] = acum
+		else: 
+			ans[i] = math.e**-lam * lam**i / fact(i)
+	ans = dict(zip(range(0,33), ans))
 	return ans
 
 def ej6():
@@ -212,3 +227,22 @@ def ej11():
 	print("c)","%.3f"%ansc)
 
 	print("d) varones esperados =", E(datos),",total de hijos esperados =", 2+E(datos))
+
+def ej12():
+
+	tabla = poisson_probt(8, True)
+	
+	print("i) P(X <= 5) =", "%.3f"% (tabla[5]))
+	print("ii) P(6 <= X <= 8) =", "%.3f"% (tabla[9] - tabla[5]))
+	print("iii) P(X >= 1) =", "%.3f"% (1-tabla[1]))
+
+	print("b) E(X) = 8, desvio(X) =", "%.3f"% (np.sqrt(8)))
+
+def ej13():
+	p3 = poisson_probt(3)
+	p4 = poisson_probt(4)
+	ans = 0
+	for i in range(0,4):
+		ans += p3[i]*p4[3-i]
+	print("la probabilidad es de","%.3f"%ans)
+	
