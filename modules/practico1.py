@@ -1,7 +1,6 @@
-
 import matplotlib.pylab as plt
-import numpy as np
 import math
+from definiciones import *
 
 def ej2():
 	#Procesamos los datos
@@ -34,7 +33,7 @@ def solve(arreglo):
 	dispersion = 0
 	for x in arreglo:
 		dispersion += (x-promedio)*(x-promedio)
-	return promedio, np.sqrt(dispersion)
+	return promedio, math.sqrt(dispersion)
 	 
 def ej3():
 	pa,da = solve([0,20,40,50,60,80,100])
@@ -140,26 +139,6 @@ def ej8():
 	dc = (9/5)*(9/5)* 1.04
 	print("iii) promedio = ","%.3f" % pc,"y desviacion =","%.3f" % dc)
 
-def media(x):
-	return sum(x)/len(x)
-
-def mediana(x):
-	if len(x)%2==0:
-		i = int(len(x)/2)
-		return (x[i]+x[i-1])/2
-	else:
-		i = int(len(x)/2)
-		return x[i]
-
-def varianza(x):
-	ans = 0
-	for i in x:
-		ans += (i - media(x))**2
-	return ans
-
-def desvio(x):
-	return np.sqrt(varianza(x))
-
 def ej11():
 	control = [1202.6, 830.1, 372.4, 345.5, 321.2, 244.3, 163, 147.8, 95, 87, 81.2, 68.5, 47.3, 41.1, 36.6, 29.0, 28.6, 26.3, 26.1, 24.4, 21.7, 17.3, 11.5, 4.9, 4.9, 1]
 	sembradas = [2745.6, 1697.8, 1656, 978, 703.4, 489.1, 430, 334.1, 302.8, 274.7, 274.7, 255, 242.5, 200.7, 198.6, 129.6, 119, 118.3, 115.3, 92.4, 40.6, 32.7, 31.4, 17.5, 7.7, 4.1]
@@ -207,7 +186,7 @@ def ej11():
 	
 def ej12():
 	IDT = [13.7, 15.5, 16.8, 17.40, 17.9, 18.6, 19.1, 19.5, 20.7, 21, 21.1, 21.4, 21.4, 22.3, 23.7, 25.5, 25.8, 26.2, 26.6, 28, 28.1, 28.9, 30.6, 31.2, 31.90, 32, 34.8, 36.3, 38.4, 38.8, 40.9, 43.5, 46, 48.9, 52.1, 55.6, 57.3, 60.1, 62.3, 72.8]
-	ln_IDT = list(map(np.log,IDT))
+	ln_IDT = list(map(math.log,IDT))
 	
 	solve12(IDT, "IDT", 10, 10)
 	print("-----------------------------")

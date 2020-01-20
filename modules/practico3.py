@@ -1,116 +1,6 @@
 import matplotlib.pylab as plt
-import numpy as np
 import math
-
-def media(x):
-	return sum(x)/len(x)
-
-def mediana(x):
-	if len(x)%2==0:
-		i = int(len(x)/2)
-		return (x[i]+x[i-1])/2
-	else:
-		i = int(len(x)/2)
-		return x[i]
-
-def varianza(x):
-	ans = 0
-	for i in x:
-		ans += (i - media(x))**2
-	return ans
-
-def desvio(x):
-	if isinstance(x, dict):
-		return np.sqrt(V(x))		
-	else:
-		return np.sqrt(varianza(x))
-
-def E(x):
-	ans = 0
-	for k in x.keys():
-		ans += k * x[k]
-	return ans
-
-def V(x):
-	esq = 0
-	for k in x.keys():
-		esq += k**2 * x[k]
-	ans = esq - E(x)**2 
-	return ans
-
-def new_E(x, a, b):
-	ans = a * E(x) - b
-	return ans
-
-def new_V(x, a, b):
-	ans = a**2 * V(x)
-	return ans
-
-def fact(n):
-	ans = 1
-	for i in range(1, n+1):
-		ans *= i
-	return ans
-
-def nCr(n, m):
-	ans = fact(n) / (fact(m) * fact(n-m))
-	return ans
-
-def binomial_probt(casos, exito, acumulada=False):
-	ans = [0] * (casos+1)
-	acum = 0
-	for i in range(0,casos+1):
-		if acumulada:
-			acum += nCr(casos,i) * exito**i * (1-exito)**(casos-i)
-			ans[i] = acum
-		else: 
-			ans[i] = nCr(casos,i) * exito**i * (1-exito)**(casos-i)
-	ans = dict(zip(range(0,casos+1),ans))
-	return ans
-
-def hypergeo_probt(casos,exitos,selec, acumulada=False):
-	ans = [0] * (exitos+1)
-	fracasos = casos - exitos
-	acum = 0
-	for i in range(0, exitos+1):
-		if acumulada:
-			if fracasos < (selec-i):
-				acum += 0
-				ans[i] = acum
-			else:
-				acum += nCr(exitos,i)*nCr(fracasos,(selec-i))/nCr(casos,selec)
-				ans[i] = acum
-		else: 
-			if fracasos < (selec-i):
-				ans[i] = 0
-			else:
-				ans[i] = nCr(exitos,i)*nCr(fracasos,(selec-i))/nCr(casos,selec)
-	ans = dict(zip(range(0,exitos+1),ans))
-	return ans
-
-def NB_probt(exitos, prob, maxk = 100, acumulada=False):
-	ans = [0] * (maxk+1)
-	acum = 0
-	for i in range(0,maxk+1):
-		if acumulada:
-			acum += nCr(exitos+i-1, exitos-1) * prob**exitos * (1-prob)**i
-			ans[i] = acum
-		else: 
-			ans[i] = nCr(exitos+i-1, exitos-1) * prob**exitos * (1-prob)**i
-	ans = dict(zip(range(0,maxk+1),ans))
-	return ans
-
-def poisson_probt(lam, acumulada=False):
-	ans = [0] * 33
-	acum = 0
-	for i in range (0, 33):
-		if acumulada:
-			acum += math.e**-lam * lam**i / fact(i)
-			ans[i] = acum
-		else: 
-			ans[i] = math.e**-lam * lam**i / fact(i)
-	ans = dict(zip(range(0,33), ans))
-	return ans
+from definiciones import *
 
 def ej6():
 	datos = {13.5:0.2, 15.9:0.5, 19.1:0.3}
@@ -204,7 +94,7 @@ def ej9():
 
 def ej10():
 	prob = hypergeo_probt(10, 7, 6)
-	prob_acum =  hypergeo_probt(10, 7, 6, True)
+	prob_acum = hypergeo_probt(10, 7, 6, True)
 
 	print("i)", prob[1])
 	
@@ -236,7 +126,7 @@ def ej12():
 	print("ii) P(6 <= X <= 8) =", "%.3f"% (tabla[9] - tabla[5]))
 	print("iii) P(X >= 1) =", "%.3f"% (1-tabla[1]))
 
-	print("b) E(X) = 8, desvio(X) =", "%.3f"% (np.sqrt(8)))
+	print("b) E(X) = 8, desvio(X) =", "%.3f"% (math.sqrt(8)))
 
 def ej13():
 	p3 = poisson_probt(3)
