@@ -1,5 +1,6 @@
 import matplotlib.pylab as plt
-import numpy as np
+
+from scipy import integrate
 import math
 
 MAX_POISSON = 38
@@ -21,24 +22,32 @@ def varianza(x):
 		ans += (i - media(x))**2
 	return ans
 
-def desvio(x):
-	if isinstance(x, dict):
-		return np.sqrt(V(x))		
+def desvio(x, a=None, b=None):
+	if a == None:
+		if isinstance(x, dict):
+			return math.sqrt(V(x))		
+		else:
+			return math.sqrt(varianza(x))
+	else: 
+		return math.sqrt(V(x, a, b))
+
+def E(x, a=None, b=None):
+	if a == None:
+		ans = 0
+		for k in x.keys():
+			ans += k * x[k]
+		return ans
 	else:
-		return np.sqrt(varianza(x))
-
-def E(x):
-	ans = 0
-	for k in x.keys():
-		ans += k * x[k]
-	return ans
-
-def V(x):
-	esq = 0
-	for k in x.keys():
-		esq += k**2 * x[k]
-	ans = esq - E(x)**2 
-	return ans
+		return integrate.quad(lambda y:y*x(y),a,b)[0]
+def V(x, a=None, b=None):
+	if a == None:
+		esq = 0
+		for k in x.keys():
+			esq += k**2 * x[k]
+		ans = esq - E(x)**2 
+		return ans
+	else:
+		return E(lambda y:x(y**2), a, b) - E(x,a,b)**2
 
 def new_E(x, a, b):
 	ans = a * E(x) - b
