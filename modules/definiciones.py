@@ -29,11 +29,14 @@ def E(x, a=None, b=None, continuous=False, modify=False):
 		return sum(x)/len(x)
 	return ans
 
+def E2(x, a, b):	
+	return integrate.quad(lambda y:y*y*x(y),a,b)[0]
+
 def V(x, a=None, b=None, continuous=False, modify=False):
 	if modify:
 		return a**2 * V(x)
 	if continuous:
-		return E(lambda y:x(y**2), a, b, True) - E(x,a,b, True)**2
+		return E2(x, a, b) - E(x,a,b, True)**2
 	if isinstance(x, dict):
 		esqared = 0
 		for k in x.keys():
@@ -151,7 +154,7 @@ def uniform_dist(a, b, acum=False):
 	var = (b-a)**2 / 12
 	return f, med, var
 
-
+"""
 def test():
 	bi_prob = binomial_probt(20, 0.2)
 	bit, bict, bie, biv, bid = binomial_dist(20, 0.2)
@@ -177,3 +180,9 @@ def test():
 	print("poisson:")
 	print("E(X) =", "%.3f"%E(po_prob),"y V(X) =", "%.3f"%V(po_prob))
 	print("E(X) =", "%.3f"%poe,"y V(X) =", "%.3f"%pov)
+
+	unif,unie,univ = uniform_dist(0,1)
+	print("uniforme:")
+	print("E(X) =", "%.3f"%E(unif,0,1,True),"y V(X) =", "%.3f"%V(unif,0,1,True))
+	print("E(X) =", "%.3f"%unie,"y V(X) =", "%.3f"%univ)
+"""

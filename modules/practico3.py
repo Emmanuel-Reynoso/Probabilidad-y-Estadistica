@@ -89,12 +89,12 @@ def ej9():
 		ansc += congar[i]
 	print("c) P(5) =", "%.3f"%ansc)
 
-	prob_d = hypergeo_probt(12,4,5)
+	prob_d = hypergeo_probt(4,5,12)
 	print("d) E(X) =", "%.3f"%E(prob_d),"y V(X) =", "%.3f"%V(prob_d))
 
 def ej10():
-	prob = hypergeo_probt(10, 7, 6)
-	prob_acum = hypergeo_probt(10, 7, 6, True)
+	prob = hypergeo_probt(6, 7, 10)
+	prob_acum = hypergeo_probt(6, 7, 10, True)
 
 	print("i)", prob[1])
 	
