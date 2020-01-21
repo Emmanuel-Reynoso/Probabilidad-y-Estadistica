@@ -145,14 +145,12 @@ def poisson_dist(lam):
 	v = lam
 	return prob_table, cumulative_table, e, v, math.sqrt(v)
 
-def uniform_dist(a, b, acum=False):
-	if acum:
-		f = lambda x: (x-a)/(b-a)
-	else:
-		f = lambda x: 1/(b-a)
+def uniform_dist(a, b):
+	fda = lambda x: (x-a)/(b-a)
+	f = lambda x: 1/(b-a)
 	med = (a+b) / 2
 	var = (b-a)**2 / 12
-	return f, med, var
+	return f, fda, med, var
 
 """
 def test():
