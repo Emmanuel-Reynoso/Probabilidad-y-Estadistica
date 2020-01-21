@@ -68,8 +68,44 @@ def ej3():
 	lefti = e - math.sqrt(v)
 	righti = e + math.sqrt(v)
 	fgi = integrate.quad(f, lefti, righti)[0]
-	print("e)", "%.3f"%fgi)
 	leftii = e - 2*math.sqrt(v)
 	rightii = e + 2*math.sqrt(v)
 	fgii = integrate.quad(f, max(a,leftii), min(b,rightii))[0]
-	print("--", "%.3f"%fgii)
+	print("e)", "%.3f"%fgi, "y", "%.3f"%fgii)
+
+def ej4():
+	f, std = normal_dist(80,100)
+	ans = integrate.quad(f, -math.inf, 100)[0]
+	print("P(X < 100) =", "%.3f"%ans)
+	ans = integrate.quad(std, -math.inf, 2)[0]
+	print("P(X < 100) =", "%.3f"%ans)
+	ans = integrate.quad(f, 65, 100)[0]
+	print("P(65 < X < 100) =", "%.3f"%ans)
+	ans = integrate.quad(f, 70, math.inf)[0] 
+	print("P(70 < X) =", "%.3f"%ans)
+	ans = integrate.quad(f, 85, 95)[0]
+	print("P(85 < X 95) =", "%.3f"%ans)
+	ans = integrate.quad(f, 70, 90)[0]
+	print("P(|X-80| < 10) =", "%.3f"%ans)
+
+
+
+
+def ej5():
+	e = 8.8
+	v = 2.8
+	d = math.sqrt(v)
+	f, std = normal_dist(8.8, 2.8)
+	std_a = (10-e)/d	
+	ansi = integrate.quad(f, -math.inf, 10)[0]
+	ansii = integrate.quad(std, std_a, math.inf)[0]
+	#solo queria probar que eran lo mismo
+	print("a) P(X < 10) =","%.3f"%ansi, "y P(10 < X) =", "%.3f"%ansii)
+	std_b = (5-e)/d
+	ans = integrate.quad(std, std_b, std_a)[0]
+	print("b) P(5 < X < 10) =", "%.3f"%ans)
+	print("c) c =", "%.3f"%(2.33*d)) 
+	exito = ans
+	prob_0arboles = (1-exito)**5
+	print("d)", "%.3f"%(1-prob_0arboles))
+	

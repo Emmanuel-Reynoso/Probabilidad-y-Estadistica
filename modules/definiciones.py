@@ -148,9 +148,14 @@ def poisson_dist(lam):
 def uniform_dist(a, b):
 	fda = lambda x: (x-a)/(b-a)
 	f = lambda x: 1/(b-a)
-	med = (a+b) / 2
-	var = (b-a)**2 / 12
-	return f, fda, med, var
+	e = (a+b) / 2
+	v = (b-a)**2 / 12
+	return f, fda, e, v
+
+def normal_dist(e, v):
+	f = lambda x: (math.e**(((x-e)**2 / (2*v)) * (-1))) / math.sqrt(2*math.pi*v)
+	std = lambda x: (math.e**((x**2 / 2)*(-1))) / math.sqrt(2*math.pi) 
+	return f, std
 
 """
 def test():
