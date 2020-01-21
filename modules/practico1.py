@@ -18,7 +18,7 @@ def ej2():
 	print("Frecuencia Absoluta: ", frec[1])
 	#Graficamos
 	fig, graficos = plt.subplots(2)     
-	fig.set_size_inches(5, 6.5)
+	fig.set_size_inches(5, 12)
 	graficos[0].set_title('Frecuencia Relativa')
 	graficos[1].set_title('Frecuencia Absoluta')
 	for i in range(0, 2):
@@ -174,7 +174,7 @@ def ej11():
 	print("")
 	print("b)")
 	fig, cajas = plt.subplots(2)     
-	fig.set_size_inches(5, 7.5)
+	fig.set_size_inches(5, 12)
 	cajas[0].set_title('Control')
 	cajas[1].set_title('Sembradas')
 	cajas[0].grid(axis='y')
@@ -198,7 +198,7 @@ def solve12(arr, name, interval, start):
 	print("maximo",name,":", "%.3f" % max(arr))
 	print("minimo",name,":", "%.3f" % min(arr))
 	print("rango",name,":","%.3f" % (max(arr) - min(arr)))
-	print("promedio",name,":","%.3f" % media(arr))
+	print("promedio",name,":","%.3f" % E(arr))
 	print("mediana",name,":","%.3f" % mediana(arr))
 	print("desvio estandar",name,":","%.3f" % desvio(arr))
 
@@ -219,7 +219,7 @@ def solve12(arr, name, interval, start):
 		tix[i] += interval*i
 
 	fig, graficos = plt.subplots(2)     
-	fig.set_size_inches(5, 7)
+	fig.set_size_inches(5, 12)
 	graficos[0].set_title(name+' - Frecuencia Relativa')
 	graficos[1].set_title(name + ' - Frecuencia Absoluta')
 	graficos[0].bar(range(len(frec)), frec, align='center')
@@ -239,8 +239,8 @@ def solve12(arr, name, interval, start):
 
 	print("g) ")
 	for i in range(1,4):
-		left = media(arr) - i * desvio(arr)
-		right = media(arr) + i * desvio(arr)
+		left = E(arr) - i * desvio(arr)
+		right = E(arr) + i * desvio(arr)
 		ans = 0
 		for el in arr:
 			if left <= el and el <= right:

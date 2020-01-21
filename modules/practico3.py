@@ -13,8 +13,8 @@ def ej6():
 
 	print("a) E(X) =","%.2f"% exp, " E(X**2) =","%.2f"% esq, "y V(X) =","%.2f"% var)
 	
-	nexp = new_E(datos, 25, 8.5)
-	nvar = new_V(datos, 25, 8.5)
+	nexp = E(datos, 25, 8.5, False, True)
+	nvar = V(datos, 25, 8.5, False, True)
 
 	print("b) E(Y) =", "%.2f"% nexp, "y V(Y) =", "%.2f"% nvar)
 
@@ -110,7 +110,7 @@ def ej11():
 	print("a) Utilizando una Binomial Negativa X~B-(2,0.5)")
 	print("p(x) = nCr(2+x-1, 2-1) * 0.5**2 * 0.5**x = (x+1) * 0.5**(x+2)")
 
-	datos = NB_probt(2,0.5)
+	datos = BN_probt(2,0.5)
 	print("b)", "%.3f"%datos[2])
 
 	ansc = datos[0] + datos[1] + datos[2]  
