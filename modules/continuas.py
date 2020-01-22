@@ -83,6 +83,44 @@ def chi_demo():
 	ax2.set_yticks(np.arange(0,1.1,0.1))
 	ax2.legend(prop={'size': 16})
 
-def gamma_demo1():
-	ans = 0
+def gamma_demo():
+	mpl.style.use('seaborn')
+	ax = [None]*4
+	f = [None]*24
+	fda = [None]*24
+	e = [None]*24
+	v = [None]*24
+	ran = list(np.linspace(0.01, 20, 1000))
+	alfa = [1,2,3,5,9,15]
+	beta = [0.5,1,1.5,2]
+	
+	for i in range (0,3):
+		fig1, ax[i] = plt.subplots(figsize=(7, 6))
+		ax[i].set_title('X~Г(a, b) - funcion de densidad', color='C0', fontsize=24)
+		for j in range(0,6):
+			f[5*i+j], fda[5*i+j], e[5*i+j], v[5*i+j] = gamma_dist(alfa[j], beta[i])
+			ax[i].plot(ran, list(map(f[5*i+j],ran)), label=('a='+str(alfa[j])+',b='+str(beta[i])))
+		ax[i].set_ylim(0,1)
+		ax[i].set_xlim(0,20)
+		ax[i].set_xlabel('x')
+		ax[i].set_ylabel('P(x)')
+		ax[i].set_xticks(np.arange(0,20,1))
+		ax[i].set_yticks(np.arange(0,1.1,0.1))
+		ax[i].legend()
+
+	for i in range (0,3):
+		fig1, ax[i] = plt.subplots(figsize=(7, 6))
+		ax[i].set_title('X~Г(a, b) - funcion de densidad acumulada', color='C0', fontsize=24)
+		for j in range(0,6):
+			f[5*i+j], fda[5*i+j], e[5*i+j], v[5*i+j] = gamma_dist(alfa[j], beta[i])
+			ax[i].plot(ran, list(map(fda[5*i+j],ran)), label=('a='+str(alfa[j])+',b='+str(beta[i])))
+		ax[i].set_ylim(0,1)
+		ax[i].set_xlim(0,20)
+		ax[i].set_xlabel('x')
+		ax[i].set_ylabel('P(X <= x)')
+		ax[i].set_xticks(np.arange(0,20,1))
+		ax[i].set_yticks(np.arange(0,1.1,0.1))
+		ax[i].legend()
+
+
 
