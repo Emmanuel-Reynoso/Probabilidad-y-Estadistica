@@ -1,5 +1,6 @@
 import math
 from scipy import integrate
+from pynverse import inversefunc
 from definiciones import *
 
 def ej1():
@@ -88,9 +89,6 @@ def ej4():
 	ans = integrate.quad(f, 70, 90)[0]
 	print("P(|X-80| < 10) =", "%.3f"%ans)
 
-
-
-
 def ej5():
 	e = 8.8
 	v = 2.8
@@ -109,3 +107,11 @@ def ej5():
 	prob_0arboles = (1-exito)**5
 	print("d)", "%.3f"%(1-prob_0arboles))
 	
+def ej8():
+	f, fda, e, v = exp_dist(0.01386)
+	d = math.sqrt(v)
+	print("a) P(X < 100) =","%.3f"%fda(100))
+	print("   P(X < 100) =","%.3f"%fda(200))
+	print("   P(100 < X < 200) =","%.3f"%(fda(200)-fda(100)))
+	print("b) P(e+d*2 < X) =", "%.3f"%(1 - fda(e+d*2)))
+	print("c) mediana(X) =", "%.3f"%(inversefunc(fda,0.5)))

@@ -1,17 +1,19 @@
 import matplotlib.pylab as plt
 import numpy as np
+from scipy import special
 from scipy import integrate
 import math
 
 MAX_POISSON = 28
 
-def mediana(x):
+def mediana(x, cont=False):
 	if len(x)%2==0:
 		i = int(len(x)/2)
 		return (x[i]+x[i-1])/2
 	else:
 		i = int(len(x)/2)
 		return x[i]
+
 
 def desvio(x, a=None, b=None, continuous=False, modify=False):
 	return math.sqrt(V(x, a, b, continuous, modify))
@@ -154,24 +156,14 @@ def uniform_dist(a, b):
 
 def normal_dist(e=None, v=None):
 	std = lambda x: (math.e**((x**2 / 2)*(-1))) / math.sqrt(2*math.pi) 
-	if e == None:
+	if e != None:
 		f = lambda x: (math.e**(((x-e)**2 / (2*v)) * (-1))) / math.sqrt(2*math.pi*v)
 		return f, std	
 	else:
 		return std
 
-def gamma(x):
-	fx = int(math.floor(x))
-	if x == 0.5:
-		ans = math.sqrt(math.pi)
-	if 0 < x - fx:
-		ans = math.sqrt(math.pi) * fact(2*fx) / (4**fx * fact(fx))
-	else:
-		ans = fact(int(x-1))
-	return ans
-
 def gamma_dist(a, b):
-	f = lambda x: x**(a-1.) * np.e**(-x/b) / (b**a * gamma(a))
+	f = lambda x: x**(a-1.) * np.e**(-x/b) / (b**a * special.gamma(a))
 	e = a * b
 	v = a * b**2
 	fda = lambda x: integrate.quad(f, 0., x)[0]
@@ -184,10 +176,17 @@ def exp_dist(lam):
 	fda = lambda x: 1.-math.e**(-lam*x)
 	return f, fda, e, v
 
-def chi_dist(k):
+def chi2_dist(k):
 	f, fda, e, v = gamma_dist(int(k)/2,2)
 	e = k
 	v = 2*k
+	return f, fda, e, v
+
+def weibull_dist(a, b):
+	f = lambda x: a * x**(a-1.) * np.e**(-((x/b)**a)) / (b**a)
+	e = b * special.gamma(1+1/a)
+	v =  b**2 * (special.gamma(1+2/a) - special.gamma(1+1/a)**2)
+	fda = lambda x: integrate.quad(f, 0., x)[0]
 	return f, fda, e, v
 
 """

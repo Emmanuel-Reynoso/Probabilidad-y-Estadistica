@@ -43,16 +43,16 @@ def exp_demo():
 	ax2.set_yticks(np.arange(0,1.2,0.1))
 	ax2.legend(prop={'size': 16})
 
-def chi_demo():
+def chi2_demo():
 	ranx = list(np.linspace(0.01, 8, 1000))
 	mpl.style.use('seaborn')
 	fig1, ax1 = plt.subplots(figsize=(7, 6))
-	f1, fda1, e1, v1 = chi_dist(1)
-	f2, fda2, e2, v2 = chi_dist(2)
-	f3, fda3, e3, v3 = chi_dist(3)
-	f4, fda4, e4, v4 = chi_dist(4)
-	f5, fda5, e5, v5 = chi_dist(6)
-	f6, fda6, e6, v6 = chi_dist(9)
+	f1, fda1, e1, v1 = chi2_dist(1)
+	f2, fda2, e2, v2 = chi2_dist(2)
+	f3, fda3, e3, v3 = chi2_dist(3)
+	f4, fda4, e4, v4 = chi2_dist(4)
+	f5, fda5, e5, v5 = chi2_dist(6)
+	f6, fda6, e6, v6 = chi2_dist(9)
 	ax1.set_title('X~chi2(k) - funcion de densidad', color='C0', fontsize=24)
 	ax1.plot(ranx, list(map(f1,ranx)), 'C1', label='k = 1')
 	ax1.plot(ranx, list(map(f2,ranx)), 'C2', label='k = 2')
@@ -83,7 +83,7 @@ def chi_demo():
 	ax2.set_yticks(np.arange(0,1.1,0.1))
 	ax2.legend(prop={'size': 16})
 
-def gamma_demo():
+def gamma_demo2():
 	mpl.style.use('seaborn')
 	ax = [None]*4
 	f = [None]*24
@@ -122,5 +122,73 @@ def gamma_demo():
 		ax[i].set_yticks(np.arange(0,1.1,0.1))
 		ax[i].legend()
 
+def gamma_demo():
+	mpl.style.use('seaborn')
+
+	f = [None]*24
+	fda = [None]*24
+	e = [None]*24
+	v = [None]*24
+	ran = list(np.linspace(0.01, 20, 1000))
+	alfa = [1,2,3,5,9]
+	beta = [0.5,1,1.5,2]
+	fig1, ax = plt.subplots(3, 2, figsize=(15, 20))
+	for i in range (0,3):
+		ax[i, 0].set_title('X~Г(a, b) - funcion de densidad', color='C0', fontsize=24)
+		for j in range(0,5):
+			f[5*i+j], fda[5*i+j], e[5*i+j], v[5*i+j] = gamma_dist(alfa[j], beta[i])
+			ax[i,0].plot(ran, list(map(f[5*i+j],ran)), label=('a='+str(alfa[j])+',b='+str(beta[i])))
+			ax[i,1].plot(ran, list(map(fda[5*i+j],ran)), label=('a='+str(alfa[j])+',b='+str(beta[i])))
+		ax[i,0].set_ylim(0,0.8)
+		ax[i,0].set_xlim(0,2.5)
+		ax[i,0].set_xlabel('x')
+		ax[i,0].set_ylabel('P(x)')
+		ax[i,0].set_xticks(np.arange(0,20,1))
+		ax[i,0].set_yticks(np.arange(0,0.9,0.1))
+		ax[i,0].legend()
+
+		ax[i,1].set_title('X~Г(a, b) - funcion de densidad acumulada', color='C0', fontsize=24)
+		ax[i,1].set_ylim(0,1.1)
+		ax[i,1].set_xlim(0,2.5)
+		ax[i,1].set_xlabel('x')
+		ax[i,1].set_ylabel('P(X <= x)')
+		ax[i,1].set_xticks(np.arange(0,20,1))
+		ax[i,1].set_yticks(np.arange(0,1.1,0.1))
+		ax[i,1].legend()
+
+def weibull_demo():
+	mpl.style.use('seaborn')
+
+	f = [None]*24
+	fda = [None]*24
+	e = [None]*24
+	v = [None]*24
+	ran = list(np.linspace(0.01, 2.5, 1000))
+	alfa = [1,2,3,5,9]
+	beta = [0.5,1,1.5,2]
+	fig1, ax = plt.subplots(4, 2, figsize=(10, 24))
+	for i in range (0,4):
+		ax[i, 0].set_title('X~W(a, b) - funcion de densidad', color='C0')
+		for j in range(0,5):
+			f[5*i+j], fda[5*i+j], e[5*i+j], v[5*i+j] = weibull_dist(alfa[j], beta[i])
+			ax[i,0].plot(ran, list(map(f[5*i+j],ran)), label=('a='+str(alfa[j])+',b='+str(beta[i])))
+		ax[i,0].set_ylim(0,3)
+		ax[i,0].set_xlim(0,2.5)
+		ax[i,0].set_xlabel('x')
+		ax[i,0].set_ylabel('P(x)')
+		ax[i,0].set_xticks(np.arange(0,2.5,0.2))
+		ax[i,0].set_yticks(np.arange(0,3.1,0.2))
+		ax[i,0].legend()
+
+		ax[i,1].set_title('X~W(a, b) - funcion de densidad acumulada', color='C0')
+		for j in range(0,5):
+			ax[i,1].plot(ran, list(map(fda[5*i+j],ran)), label=('a='+str(alfa[j])+',b='+str(beta[i])))
+		ax[i,1].set_ylim(0,1.1)
+		ax[i,1].set_xlim(0,2.5)
+		ax[i,1].set_xlabel('x')
+		ax[i,1].set_ylabel('P(X <= x)')
+		ax[i,1].set_xticks(np.arange(0,2.5,0.2))
+		ax[i,1].set_yticks(np.arange(0,1.1,0.2))
+		ax[i,1].legend()
 
 

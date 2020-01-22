@@ -9,3 +9,4 @@ Parte I: Probabilidad
 [practico 4](https://drive.google.com/open?id=1-JTwBg0Nt9jOuQX1vgStpW-089dZVUMe)   
 
 Parte II: Inferencia estadística  
+
