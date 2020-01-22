@@ -1,5 +1,5 @@
 import matplotlib.pylab as plt
-
+import numpy as np
 from scipy import integrate
 import math
 
@@ -152,10 +152,43 @@ def uniform_dist(a, b):
 	v = (b-a)**2 / 12
 	return f, fda, e, v
 
-def normal_dist(e, v):
-	f = lambda x: (math.e**(((x-e)**2 / (2*v)) * (-1))) / math.sqrt(2*math.pi*v)
+def normal_dist(e=None, v=None):
 	std = lambda x: (math.e**((x**2 / 2)*(-1))) / math.sqrt(2*math.pi) 
-	return f, std
+	if e == None:
+		f = lambda x: (math.e**(((x-e)**2 / (2*v)) * (-1))) / math.sqrt(2*math.pi*v)
+		return f, std	
+	else:
+		return std
+
+def gamma(x):
+	fx = int(math.floor(x))
+	if x == 0.5:
+		ans = math.sqrt(math.pi)
+	if 0 < x - fx:
+		ans = math.sqrt(math.pi) * fact(2*fx) / (4**fx * fact(fx))
+	else:
+		ans = fact(int(x-1))
+	return ans
+
+def gamma_dist(a, b):
+	f = lambda x: x**(a-1.) * np.e**(-x/b) / (b**a * gamma(a))
+	e = a * b
+	v = a * b**2
+	fda = lambda x: integrate.quad(f, 0., x)[0]
+	return f, fda, e, v
+
+def exp_dist(lam):
+	f, fda, e, v = gamma_dist(1.,1./lam)
+	e = 1 / lam
+	v = 1 / lam**2
+	fda = lambda x: 1.-math.e**(-lam*x)
+	return f, fda, e, v
+
+def chi_dist(k):
+	f, fda, e, v = gamma_dist(int(k)/2,2)
+	e = k
+	v = 2*k
+	return f, fda, e, v
 
 """
 def test():
