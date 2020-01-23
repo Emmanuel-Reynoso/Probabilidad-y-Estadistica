@@ -191,4 +191,74 @@ def weibull_demo():
 		ax[i,1].set_yticks(np.arange(0,1.1,0.2))
 		ax[i,1].legend()
 
+def lognormal_demo():
+	mpl.style.use('seaborn')
 
+	f = [None]*24
+	fda = [None]*24
+	e = [None]*24
+	v = [None]*24
+	ran = list(np.linspace(0.01, 2.5, 1000))
+	desvio = [0.0025, 0.125**2,0.25**2, 0.5**2, 1**2, 2.25]
+	label = [0.05,0.125,0.25, 0.5, 1, 1.5]
+	fig1, ax1 = plt.subplots()
+	ax1.set_title('X~lognormal(μ, σ2) - funcion de densidad', color='C0', fontsize=24)
+
+	fig2, ax2 = plt.subplots()
+
+	for j in range(0,6):
+		f[j], fda[j], e[j], v[j] = lognormal_dist(0,desvio[j])
+		ax1.plot(ran, list(map(f[j],ran)), label=('μ = '+str(0)+', σ2 ='+str(label[j])))
+		ax2.plot(ran, list(map(fda[j],ran)), label=('μ = '+str(0)+', σ2 ='+str(label[j])))
+	ax1.set_ylim(0,1.5)
+	ax1.set_xlim(0,2.5)
+	ax1.set_xlabel('x')
+	ax1.set_ylabel('P(x)')
+	ax1.set_xticks(np.arange(0,2.5,0.25))
+	ax1.set_yticks(np.arange(0,1.6,0.1))
+	ax1.legend()
+
+	ax2.set_title('X~lognormal(μ, σ2) - fda', color='C0', fontsize=24)
+	ax2.set_ylim(0,1.1)
+	ax2.set_xlim(0,2.5)
+	ax2.set_xlabel('x')
+	ax2.set_ylabel('P(X <= x)')
+	ax2.set_xticks(np.arange(0,2.5,0.25))
+	ax2.set_yticks(np.arange(0,1.1,0.1))
+	ax2.legend()
+
+def normal_demo():
+	mpl.style.use('seaborn')
+
+	f = [None]*24
+	fda = [None]*24
+	ran = list(np.linspace(-2.5, 2.5, 1000))
+	desvio = [0.125**2,0.25**2,0.333**2, 0.5**2, 1**2, 2.25]
+	label = [0.125,0.25, 0.333, 0.5, 1, 1.5]
+	media = [-1, 0.5, 0, 0, -0.5, 1]
+	fig1, ax1 = plt.subplots()
+	ax1.set_title('X~N(μ, v) - funcion de densidad', color='C0', fontsize=24)
+
+	fig2, ax2 = plt.subplots()
+
+	for j in range(0,6):
+		f[j], _ = normal_dist(media[j],desvio[j])
+		_, fda[j] = normal_dist(0,desvio[j])
+		ax1.plot(ran, list(map(f[j],ran)), label=('μ = '+str(media[j])+', σ2 = '+str(label[j])))
+		ax2.plot(ran, list(map(fda[j],ran)), label=('μ = '+str(0)+', σ2 = '+str(label[j])))
+	ax1.set_ylim(0,1.5)
+	ax1.set_xlim(-2.5,2.5)
+	ax1.set_xlabel('x')
+	ax1.set_ylabel('P(x)')
+	ax1.set_xticks(np.arange(-2.5,2.5,0.25))
+	ax1.set_yticks(np.arange(0,1.6,0.1))
+	ax1.legend()
+
+	ax2.set_title('X~N(μ, σ2) - fda', color='C0', fontsize=24)
+	ax2.set_ylim(0,1.1)
+	ax2.set_xlim(-1,1)
+	ax2.set_xlabel('x')
+	ax2.set_ylabel('P(X <= x)')
+	ax2.set_xticks(np.arange(-1,1,0.25))
+	ax2.set_yticks(np.arange(0,1.1,0.1))
+	ax2.legend()

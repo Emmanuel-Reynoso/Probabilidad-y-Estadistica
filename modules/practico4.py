@@ -115,3 +115,8 @@ def ej8():
 	print("   P(100 < X < 200) =","%.3f"%(fda(200)-fda(100)))
 	print("b) P(e+d*2 < X) =", "%.3f"%(1 - fda(e+d*2)))
 	print("c) mediana(X) =", "%.3f"%(inversefunc(fda,0.5)))
+
+def ej9():
+	f, fda, e, v = weibull_dist(2,1.5)
+	print("a) P(5 - X) =","%.3f"%(1 - fda(5-3.5)))
+	print("b) P(5 < X < 8) =","%.3f"%(fda(8-3.5)-fda(5-3.5)))

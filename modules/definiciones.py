@@ -1,5 +1,6 @@
 import matplotlib.pylab as plt
 import numpy as np
+from scipy.stats import lognorm
 from scipy import special
 from scipy import integrate
 import math
@@ -158,7 +159,8 @@ def normal_dist(e=None, v=None):
 	std = lambda x: (math.e**((x**2 / 2)*(-1))) / math.sqrt(2*math.pi) 
 	if e != None:
 		f = lambda x: (math.e**(((x-e)**2 / (2*v)) * (-1))) / math.sqrt(2*math.pi*v)
-		return f, std	
+		fda = lambda x: integrate.quad(f, -math.inf, x)[0]
+		return f, fda	
 	else:
 		return std
 
@@ -187,6 +189,13 @@ def weibull_dist(a, b):
 	e = b * special.gamma(1+1/a)
 	v =  b**2 * (special.gamma(1+2/a) - special.gamma(1+1/a)**2)
 	fda = lambda x: integrate.quad(f, 0., x)[0]
+	return f, fda, e, v
+
+def lognormal_dist(e, v):
+	f = lambda x:lognorm.pdf(x,math.sqrt(v))
+	fda = lambda x: lognorm.cdf(x,math.sqrt(v))
+	e = math.e**(e+v/2)
+	v = np.exp(2*e+v) * (np.exp(v) - 1)
 	return f, fda, e, v
 
 """
