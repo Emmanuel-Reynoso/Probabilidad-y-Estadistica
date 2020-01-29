@@ -198,6 +198,9 @@ def lognormal_dist(e, v):
 	v = np.exp(2*e+v) * (np.exp(v) - 1)
 	return f, fda, e, v
 
+def cov(f, px, py, a, b):
+	dob = integrate.dblquad(lambda x,y: x*y*f(x,y), 0, 10, lambda x: 0, lambda x: 10)[0]
+	return dob - E(px, a, b, continuous=True)*E(py, a, b, continuous=True)
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)
