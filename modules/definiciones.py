@@ -1,4 +1,7 @@
-import matplotlib.pylab as plt
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
 from scipy.stats import lognorm
 from scipy import special
@@ -198,9 +201,39 @@ def lognormal_dist(e, v):
 	v = np.exp(2*e+v) * (np.exp(v) - 1)
 	return f, fda, e, v
 
-def cov(f, px, py, a, b):
+def cov(f, a, b):
+	px = lambda x: integrate.quad(lambda y:f(x,y),0,10)[0]
+	py = lambda y: integrate.quad(lambda x:f(x,y),0,10)[0]
 	dob = integrate.dblquad(lambda x,y: x*y*f(x,y), 0, 10, lambda x: 0, lambda x: 10)[0]
 	return dob - E(px, a, b, continuous=True)*E(py, a, b, continuous=True)
+
+def corr(f, a, b):
+	px = lambda x: integrate.quad(lambda y:f(x,y),0,10)[0]
+	py = lambda y: integrate.quad(lambda x:f(x,y),0,10)[0]
+	dx = desvio(px, a, b, continuous=True)
+	dy = desvio(py, a, b, continuous=True)
+	co = cov(f, a, b)
+	return co/(dx*dy)
+
+def show_conjunta(f, a, b):
+	fig = plt.figure(figsize=(9, 6))
+	ax = fig.gca(projection='3d')
+
+	# Make data.
+	X = np.arange(a, b, (a+b)/200)
+	Y = np.arange(a, b, (a+b)/200)
+	X, Y = np.meshgrid(X, Y)
+	Z = f(X,Y)
+
+	ax.contourf(X, Y, Z, zdir='x', offset=-(b-a)/10, cmap=cm.copper, alpha=0.3)
+	ax.contourf(X, Y, Z, zdir='y', offset=b+(b-a)/10, cmap=cm.copper, alpha=0.3)
+	surf = ax.plot_surface(X, Y, Z, cmap=cm.copper, rstride=8, cstride=8, alpha=0.8)
+	ax.set_xlabel('X')
+	ax.set_ylabel('Y')
+
+	fig.colorbar(surf, shrink=0.5, aspect=5)
+
+	plt.show()
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)

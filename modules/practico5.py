@@ -3,8 +3,6 @@ from scipy import integrate
 from pynverse import inversefunc
 from definiciones import *
 
-def show():
-	ans = 0
 
 def ej2():
 	k = 1./1000
@@ -19,5 +17,8 @@ def ej2():
 	print("d) Px(x) = (x+5)/100")
 	print("   Py(y) = (y+5)/100")
 	print("   independencia:", f(2,3) == 7/100 * 5/100) 
-	px = lambda x: (x+5)/100
-	print("e) cov(X,Y) =", "%.3f"%cov(f,px,px, 0, 10))
+	print("e) cov(X,Y) =", "%.3f"%cov(f, 0, 10))
+	show_conjunta(f,0,10)
+
+def ej4():
+	print("a) f(x,y) = exp(-)")
