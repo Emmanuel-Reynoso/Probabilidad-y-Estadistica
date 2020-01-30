@@ -21,4 +21,13 @@ def ej2():
 	show_conjunta(f,0,10)
 
 def ej4():
-	print("a) f(x,y) = exp(-)")
+	p, fda, e, v = exp_dist(1)
+	print("a) f(x,y) = exp(-x-y) si 0 < x,y")
+	f = lambda x,y: p(x)*p(y)
+	ans = integrate.dblquad(f,0,1,lambda x:0,lambda x:1)[0]
+	print("b) P(X+Y<1) =", "%.3f"%ans)
+	ans = integrate.dblquad(f,0,2,lambda x:0,lambda x:2-x)[0]
+	print("c) P(X+Y<2) =", "%.3f"%ans)
+	
+def ej7():
+	ans = 0
