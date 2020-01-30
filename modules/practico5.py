@@ -29,5 +29,7 @@ def ej4():
 	ans = integrate.dblquad(f,0,2,lambda x:0,lambda x:2-x)[0]
 	print("c) P(X+Y<2) =", "%.3f"%ans)
 	
+	show_conjunta(f, 0, 2)
+	
 def ej7():
 	ans = 0
