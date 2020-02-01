@@ -241,7 +241,13 @@ def Zvalue(x, e, d):
 def prob_norm(a=-math.inf, b=math.inf):
 	std = normal_dist()
 	return integrate.quad(std, a, b)[0]
-	
+
+def aprox_prob(e, d, n, a=-math.inf, b=math.inf):
+	std = normal_dist()
+	aa = Zvalue(a, e, d) * math.sqrt(n)
+	ab = Zvalue(b, e, d) * math.sqrt(n)
+	return integrate.quad(std, aa, ab)[0]
+
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)
