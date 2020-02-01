@@ -35,8 +35,24 @@ def ej9():
 	pt, pta, e, v, d = binomial_dist(50, 0.4)
 	print("a)")
 	print("  valor exacto:", "%.3f"%(1 - pta[24]))
-	print("  valor aproximado por normal:", "%.3f"%(1 - Zvalue(a=1.155)))
+	print("  valor aproximado por normal:", "%.3f"%(prob_norm(a=1.155)))
 	print("b)")
 	print("  valor exacto:", "%.3f"%(pta[25]-pta[15]))
-	print("  valor aproximado por normal:", "%.3f"%(Zvalue(a=-1.44,b=1.44)))
+	print("  valor aproximado por normal:", "%.3f"%(prob_norm(a=-1.44,b=1.44)))
 	
+def ej10():
+	pt, pta, e, v, d = binomial_dist(200, 0.1)
+	za = Zvalue(30, e, d)
+	zcb = Zvalue(25, e, d)
+	zca = Zvalue(15, e, d)
+
+	print("a) ")
+	print("  valor exacto:", "%.3f"%(1 - pta[29]))
+	print("  valor aproximado:", "%.3f"%(prob_norm(a=za)))
+	print("b) ")
+	print("  valor exacto:", "%.3f"%(pta[29]))
+	print("  valor aproximado:", "%.3f"%(1 - prob_norm(a=za)))
+	print("c) ")
+	print("  valor exacto:", "%.3f"%(pta[25]-pta[15]))
+	print("  valor aproximado:", "%.3f"%(prob_norm(a=zca, b=zcb)))
+

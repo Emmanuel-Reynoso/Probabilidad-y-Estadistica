@@ -235,7 +235,10 @@ def show_conjunta(f, a, b):
 
 	plt.show()
 
-def Zvalue(a=-math.inf, b=math.inf):
+def Zvalue(x, e, d):
+	return (x-e)/d
+
+def prob_norm(a=-math.inf, b=math.inf):
 	std = normal_dist()
 	return integrate.quad(std, a, b)[0]
 	
