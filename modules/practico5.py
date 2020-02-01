@@ -31,5 +31,7 @@ def ej4():
 	
 	show_conjunta(f, 0, 2)
 	
-def ej7():
-	ans = 0
+def ej9():
+	pt, pta, e, v, d = binomial_dist(50, 0.4)
+	print(1 - pta[24])
+	print(1 - Zvalue(1.155))

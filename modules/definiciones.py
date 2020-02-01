@@ -234,6 +234,11 @@ def show_conjunta(f, a, b):
 	fig.colorbar(surf, shrink=0.5, aspect=5)
 
 	plt.show()
+
+def Zvalue(a=-math.inf, b=math.inf):
+	std = normal_dist()
+	return integrate.quad(std, a, b)[0]
+	
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)

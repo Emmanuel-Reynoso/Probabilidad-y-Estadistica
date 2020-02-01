@@ -7,7 +7,7 @@ Parte I: Probabilidad
 [practico 2](https://drive.google.com/open?id=1N98T6xU6Girdz2Ngt9CzE8Mjy97uICZ6)   
 [practico 3](https://drive.google.com/open?id=1JJ6D0K4PxrUNBxusu_mlLYhUlXX-txsN)   
 [practico 4](https://drive.google.com/open?id=1-JTwBg0Nt9jOuQX1vgStpW-089dZVUMe)   
+[practico 5](https://drive.google.com/open?id=1-pYfXfjIRCm-M-QaY0ZuNqsRWSmAHLyV)   
 
 Parte II: Inferencia estadística  
-[practico 5](https://drive.google.com/open?id=1-pYfXfjIRCm-M-QaY0ZuNqsRWSmAHLyV)   
 
