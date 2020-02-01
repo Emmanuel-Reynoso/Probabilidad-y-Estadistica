@@ -33,5 +33,10 @@ def ej4():
 	
 def ej9():
 	pt, pta, e, v, d = binomial_dist(50, 0.4)
-	print(1 - pta[24])
-	print(1 - Zvalue(1.155))
+	print("a)")
+	print("  valor exacto:", "%.3f"%(1 - pta[24]))
+	print("  valor aproximado por normal:", "%.3f"%(1 - Zvalue(a=1.155)))
+	print("b)")
+	print("  valor exacto:", "%.3f"%(pta[25]-pta[15]))
+	print("  valor aproximado por normal:", "%.3f"%(Zvalue(a=-1.44,b=1.44)))
+	
