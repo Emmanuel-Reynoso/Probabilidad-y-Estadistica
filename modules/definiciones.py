@@ -29,11 +29,13 @@ def E(x, a=None, b=None, continuous=False, modify=False):
 		return integrate.quad(lambda y:y*x(y),a,b)[0]
 	if isinstance(x, dict):
 		ans = 0
+		num = 0
 		for k in x.keys():
 			ans += k * x[k]
+			num += x[k]
 	else:
 		return sum(x)/len(x)
-	return ans
+	return ans/num
 
 def E2(x, a, b):	
 	return integrate.quad(lambda y:y*y*x(y),a,b)[0]
@@ -45,9 +47,11 @@ def V(x, a=None, b=None, continuous=False, modify=False):
 		return E2(x, a, b) - E(x,a,b, True)**2
 	if isinstance(x, dict):
 		esqared = 0
+		num = 0
 		for k in x.keys():
 			esqared += k**2 * x[k]
-		ans = esqared - E(x)**2 
+			num += x[k]
+		ans = esqared/num - E(x)**2 
 	else:
 		ans = 0
 		for i in x:
