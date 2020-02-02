@@ -36,3 +36,15 @@ def ej2():
 	print("    error =", "%.3f"%error)
 
 	print("d)", "%.3f"%(d1/d2))
+
+def ej3():
+	X1, fda1, e1, v1, d1 = binomial_dist(200, 127/200)
+	X2, fda2, e2, v2, d2 = binomial_dist(200, 176/200)
+	prob = (E(X1) - E(X2))/200
+	var = V(X1)/200**2 + V(X2)/200**2
+	error = math.sqrt(var)
+	print("c)valor estimado:", "%.3f"%prob)
+	print("d) error estandar estimado:", "%.3f"%error) 
+
+def ej6():
+	ans = 0
