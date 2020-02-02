@@ -44,7 +44,21 @@ def ej3():
 	var = V(X1)/200**2 + V(X2)/200**2
 	error = math.sqrt(var)
 	print("c)valor estimado:", "%.3f"%prob)
-	print("d) error estandar estimado:", "%.3f"%error) 
+	print("d) error estandar estimado:", error) 
 
 def ej6():
-	ans = 0
+	print("a) E(X) = integrate x*f(x) dx from -inf to inf")
+	print("        = integrate θx**(θ+1) + x**(θ+1) dx from 0 to 1")
+	print("        = θ/(θ+2) + 1/(θ+2) ")
+	print("----------------------------")
+	print("     Xb = E(X)")
+	print("     Xb = (θ+1)/(θ+2)")
+	print("  θ + 1 = Xb * (θ+2)")
+	print("  θ + 1 = Xb*θ + 2Xb")
+	print("θ- Xb*θ = 2Xb - 1")
+	print("      θ = (2Xb - 1)/(1 - Xb)")
+	
+	Y = [0.92, 0.79, 0.9, 0.65, 0.86, 0.47, 0.73, 0.97, 0.94, 0.77] 
+	e = E(Y)
+	est = (2*e - 1)/(1-e)
+	print("b)", "%.3f"%est)
