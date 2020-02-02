@@ -62,3 +62,13 @@ def ej6():
 	e = E(Y)
 	est = (2*e - 1)/(1-e)
 	print("b)", "%.3f"%est)
+
+def ej7():
+	ans = 0
+
+def ej8():
+	ans = 0
+	
+def ej9():
+	ans = 0
+	
