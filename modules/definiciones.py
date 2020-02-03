@@ -40,7 +40,7 @@ def E(x, a=None, b=None, continuous=False, modify=False):
 def E2(x, a, b):	
 	return integrate.quad(lambda y:y*y*x(y),a,b)[0]
 
-def V(x, a=None, b=None, continuous=False, modify=False):
+def V(x, a=None, b=None, est=False, continuous=False, modify=False):
 	if modify:
 		return a**2 * V(x)
 	if continuous:
@@ -51,11 +51,14 @@ def V(x, a=None, b=None, continuous=False, modify=False):
 		for k in x.keys():
 			esqared += k**2 * x[k]
 			num += x[k]
-		ans = esqared/num - E(x)**2 
+		ans = esqared - E(x)**2 
 	else:
 		ans = 0
+		e = E(x)
 		for i in x:
-			ans += (i - E(x))**2
+			ans += (i - e)**2
+		if est:
+			return ans/len(x)
 	return ans
 
 def fact(n):
@@ -251,7 +254,7 @@ def aprox_prob(e, d, n, a=-math.inf, b=math.inf):
 	aa = Zvalue(a, e, d) * math.sqrt(n)
 	ab = Zvalue(b, e, d) * math.sqrt(n)
 	return integrate.quad(std, aa, ab)[0]
-
+                                
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)

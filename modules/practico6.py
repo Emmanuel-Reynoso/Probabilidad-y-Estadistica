@@ -1,6 +1,8 @@
 import math
 from scipy import integrate
 from pynverse import inversefunc
+from sympy import *
+import numpy as np
 from definiciones import *
 
 def ej1():
@@ -64,11 +66,38 @@ def ej6():
 	print("b)", "%.3f"%est)
 
 def ej7():
-	ans = 0
+	X = [0.83, 0.88, 0.88, 1.04, 1.09, 1.12, 1.29, 1.31, 1.48, 1.49, 1.59, 1.62, 1.65, 1.71, 1.71, 1.76, 1.83]
+	e = E(X)
+	v = V(X, est=True)
+	d = math.sqrt(v)
+	print("a)", "%.3f"%e)
+	f, fda = normal_dist(e, v)
+	print("b) la mediana de una distribución normal es igual su promedio")
+	per90 = 1.37
+	while integrate.quad(f, -math.inf, per90)[0] < 0.9:
+		per90 += 0.01
+	print("c) percentil 90 =", "%.3f"%per90)
+	print("d)", "%.3f"%integrate.quad(f, -math.inf, 1.5)[0])
+	print("e)", "%.3f"%d)
+
 
 def ej8():
-	ans = 0
+	X = [3.11, 0.64, 2.55, 2.2, 5.44, 3.42, 10.39, 8.93, 17.82, 1.30]
+	print("El estimador de MV de λ es 1/Xb")
+	lam = 1/E(X)
+	print("b) λ =", "%.3f"%lam)
 	
 def ej9():
-	ans = 0
-	
+	X = [392, 376, 401, 367, 389, 362, 409, 415, 358, 375]
+	e = E(X)
+	v = V(X, est=True)
+	d = math.sqrt(v)
+	f, fda = normal_dist(e, v)
+
+	print("a) E(X) =", "%.3f"%e)
+	print("  error =", "%.3f"%d)
+	per95 = e
+	while integrate.quad(f, -math.inf, per95)[0] < 0.9:
+		per95 += 0.01
+	print("b) percentil 95 =", "%.3f"%per95)
+	print("c)", "%.3f"%integrate.quad(f, -math.inf, 400)[0])
