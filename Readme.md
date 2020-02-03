@@ -11,4 +11,5 @@ Parte I: Probabilidad
   
 Parte II: Inferencia estadística  
 [práctico 6](https://drive.google.com/open?id=13pnyhnsLaejJJSaEfZpqHK_rMZ_ChuaN)   
-
+[práctico 7](https://drive.google.com/open?id=1hdE7tr4GnpP8DRrZE0rjdf5ztfR_rrij)   
+[práctico 8](https://drive.google.com/open?id=1kipxp7prV9iXFzDm-UX_CbomXeGA-Y_j)   

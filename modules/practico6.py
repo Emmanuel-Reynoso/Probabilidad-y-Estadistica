@@ -1,8 +1,6 @@
 import math
 from scipy import integrate
 from pynverse import inversefunc
-from sympy import *
-import numpy as np
 from definiciones import *
 
 def ej1():
