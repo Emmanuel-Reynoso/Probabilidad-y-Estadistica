@@ -59,7 +59,7 @@ def ej4():
 
 def ej5():
 	ica, _ = int_conf(188.0, 7.2, 40, .98)
-	icva1, _ = ic_var(7.2, 40, 0.95)
+	icva1, _ = ic_var(7.2, 40, 0.98)
 	print("a)")
 	print("   i)", ica)
 	print("   ii)", icva1)
@@ -69,3 +69,17 @@ def ej5():
 	print("b)")
 	print("   i)", icb)
 	print("   ii)", icva2)
+
+def ej6():
+	x = (229.764+233.504)/2
+	s = ic_getdev(x, 233.504, 5, 0.95)
+	print("S =", "%.3f"%s)
+	ic, _ = ic_mean(x, s, 5, 0.99)
+	print("el intervalo es:", ic)
+
+def ej7():
+	ic, _ = ic_mean(0.214, .036, 16, 0.9)
+	icde, _ = ic_dev(0.036, 16, 0.9)
+
+	print("a)", ic)
+	print("b)", icde)

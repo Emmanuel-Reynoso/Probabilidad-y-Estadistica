@@ -12,7 +12,6 @@ import math
 
 MAX_POISSON = 28
 
-
 def mediana(x, cont=False):
 	if len(x)%2==0:
 		i = int(len(x)/2)
@@ -304,11 +303,27 @@ def ic_var(d, n, conf):
 	a = (1 - conf)/2
 	xi = chi2.ppf(a, n-1)
 	xd = chi2.ppf(1- a, n-1)
-	izq = "%.3f"%((n-1) * d**2 / xi)
-	der = "%.3f"%((n-1) * d**2 / xd)
+	izq = "%.3f"%((n-1) * d**2 / xd)
+	der = "%.3f"%((n-1) * d**2 / xi)
 	ic = (float(izq), float(der))
 	lon = ic[1] - ic[0]
 	return ic, lon		
+
+def ic_dev(d, n, conf):
+	a = (1 - conf)/2
+	xi = chi2.ppf(a, n-1)
+	xd = chi2.ppf(1- a, n-1)
+	izq = "%.3f"%(math.sqrt((n-1) * d**2 / xd))
+	der = "%.3f"%(math.sqrt((n-1) * d**2 / xi))
+	ic = (float(izq), float(der))
+	lon = ic[1] - ic[0]
+	return ic, lon		
+
+def ic_getdev(x, der, n, conf):
+	a = (1 + conf)/2
+	tv = t.ppf(a, n-1)
+	d = (der - x)/tv * math.sqrt(n)
+	return d
 
 """
 def test():
