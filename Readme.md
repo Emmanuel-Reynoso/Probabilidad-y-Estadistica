@@ -1,4 +1,4 @@
-Las respuestas a los prácticos se encuentan en formato jupyter notebook (los archivos *.ipynb*). el razonamiento de algunas resoluciones se encuentra en los archivos *.py*, pero no recomiendo pelear contra el código porque lo hice para ir resolviendo los ejercicios improvisadamente, no es mi intención mantenerlo o hacerlo mas simple/comprensible.  
+Las respuestas a los prácticos se encuentan en formato jupyter notebook (los archivos `.ipynb`). El razonamiento detras de los resultados en su mayoría se encuentra en los archivos `.py`, pero no recomiendo pelear contra el código porque lo hice improvisadamente mientras me preparo para rendir el final. 
 
 Leer los ejercicios originales previamente es necesario:  
 
