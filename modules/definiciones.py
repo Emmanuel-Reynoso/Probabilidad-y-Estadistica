@@ -6,9 +6,11 @@ import numpy as np
 from scipy.stats import lognorm
 from scipy import special
 from scipy import integrate
+from pynverse import inversefunc
 import math
 
 MAX_POISSON = 28
+
 
 def mediana(x, cont=False):
 	if len(x)%2==0:
@@ -58,7 +60,7 @@ def V(x, a=None, b=None, est=False, continuous=False, modify=False):
 		for i in x:
 			ans += (i - e)**2
 		if est:
-			return ans/len(x)
+			return ans/(len(x)-1)
 	return ans
 
 def fact(n):
@@ -174,6 +176,8 @@ def normal_dist(e=None, v=None):
 	else:
 		return std
 
+STD = normal_dist()
+
 def gamma_dist(a, b):
 	f = lambda x: x**(a-1.) * np.e**(-x/b) / (b**a * special.gamma(a))
 	e = a * b
@@ -249,12 +253,33 @@ def prob_norm(a=-math.inf, b=math.inf):
 	std = normal_dist()
 	return integrate.quad(std, a, b)[0]
 
+def z_prob(a=-math.inf, b=math.inf):
+	return integrate.quad(STD, a, b)[0]
+
 def aprox_prob(e, d, n, a=-math.inf, b=math.inf):
 	std = normal_dist()
 	aa = Zvalue(a, e, d) * math.sqrt(n)
 	ab = Zvalue(b, e, d) * math.sqrt(n)
 	return integrate.quad(std, aa, ab)[0]
-                                
+
+def t_dist(v):
+	f = lambda x: special.gamma((v+1)/2) * (1 + x**2 / v)**((-v-1)/2) / (math.sqrt(v*math.pi)/special.gamma(v/2))
+	e = 0
+	va = v/(v-2)
+	fda = lambda x: integrate.quad(f, 0., x)[0]
+	return f, fda, e, va
+
+def auxz(b):
+	return integrate.quad(STD, -b, b)[0]
+	
+def int_conf(x, d, n, conf):
+	invz = inversefunc(auxz)
+	z = invz(conf)
+	izq = "%.3f"%(x - z * d/math.sqrt(n))
+	der = "%.3f"%(x + z * d/math.sqrt(n))
+	ic = (float(izq), float(der))
+	lon = ic[1] - ic[0]
+	return ic, lon
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)
