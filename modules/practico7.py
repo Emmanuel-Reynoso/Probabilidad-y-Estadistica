@@ -36,22 +36,36 @@ def ej2():
 	print("c)", ic3)
 	print("   longitudC =", "%.2f"%(longC/longB), "* longitudB")
 
-	n = 25
-	longD = 2
-	while 1 < longD: 
-		izq = (58.3 - 2.575 * 3/math.sqrt(n))
-		der = (58.3 + 2.575 * 3/math.sqrt(n))
-		longD = der - izq
-		n += 1
-	print("d)", n)
+	n = ic_getN(58.3, 3, 1, 0.99)
+	print("d) n >=", n)
 
 def ej3():
 	ica, _ = int_conf(1.028, 0.163, 69, 0.95)
 	print("a)", ica)
 
-	n = 50
-	_, lon = int_conf(1.028, 0.16, n, 0.95)
-	while 0.05 <= lon:
-		n += 1
-		_, lon = int_conf(1.028, 0.16, n, 0.95)
-	print("b) n =", n)
+	n = ic_getN(1.028, 0.16, 0.05, 0.95)
+	print("b) n >=", n)
+
+def ej4():
+	e = 133
+	p = 133/539
+	v = p * (1-p)
+	d = math.sqrt(v)
+	ica, _ = int_conf(p, d, 539, 0.98)
+	print("a)", ica)
+
+	n = ic_getN(p, d, 0.10, 0.98)
+	print("b) n >=", n)
+
+def ej5():
+	ica, _ = int_conf(188.0, 7.2, 40, .98)
+	icva1, _ = ic_var(7.2, 40, 0.95)
+	print("a)")
+	print("   i)", ica)
+	print("   ii)", icva1)
+
+	icb, _ = ic_mean(188.0, 7.2, 9, .95)
+	icva2, _ = ic_var(7.2, 9, 0.95)
+	print("b)")
+	print("   i)", icb)
+	print("   ii)", icva2)

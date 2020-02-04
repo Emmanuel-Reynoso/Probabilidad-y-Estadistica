@@ -7,6 +7,7 @@ from scipy.stats import lognorm
 from scipy import special
 from scipy import integrate
 from pynverse import inversefunc
+from scipy.stats import t, chi2
 import math
 
 MAX_POISSON = 28
@@ -280,6 +281,35 @@ def int_conf(x, d, n, conf):
 	ic = (float(izq), float(der))
 	lon = ic[1] - ic[0]
 	return ic, lon
+
+def ic_getN(x, d, om, conf):
+	invz = inversefunc(auxz)
+	z = invz(conf)
+	n = (2*z*d/om)**2
+	return math.ceil(n)
+
+def ic_mean(x, d, n, conf, normal=False):
+	if not normal and n < 30:
+		a = (1 + conf)/2
+		tv = t.ppf(a, n-1)
+		izq = "%.3f"%(x - tv * d/math.sqrt(n))
+		der = "%.3f"%(x + tv * d/math.sqrt(n))
+		ic = (float(izq), float(der))
+		lon = ic[1] - ic[0]
+		return ic, lon
+	else:
+		return int_conf(x, d, n, conf)
+
+def ic_var(d, n, conf):
+	a = (1 - conf)/2
+	xi = chi2.ppf(a, n-1)
+	xd = chi2.ppf(1- a, n-1)
+	izq = "%.3f"%((n-1) * d**2 / xi)
+	der = "%.3f"%((n-1) * d**2 / xd)
+	ic = (float(izq), float(der))
+	lon = ic[1] - ic[0]
+	return ic, lon		
+
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)
