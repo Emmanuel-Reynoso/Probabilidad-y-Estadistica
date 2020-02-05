@@ -327,39 +327,54 @@ def ic_getdev(x, der, n, conf):
 	d = (der - x)/tv * math.sqrt(n)
 	return d
 
+def ph_mean_result(x,d,n,e,a, hip=None, case=None):
+	if case == 'A':
+		z = abs(math.sqrt(n)*(x - e)/d)
+		if hip == 'equal':
+			c = abs(norm.ppf(a/2))
+			return 0 < c - z
+		elif hip == 'less':
+			c = abs(norm.ppf(a))
+			return c <= z 
+		elif hip == 'greater':
+			c = abs(norm.ppf(a))
+			return z <= -c
+
 def ph_mean_err1(x, d, n, izq, der, hip=None, case=None):
 	if case == 'A':
-		less = aprox_prob(x,d,n,b=izq)
-		greater = aprox_prob(x,d,n,a=der)
+		less = norm.cdf(math.sqrt(n)*(izq-x)/d)
+		greater = norm.cdf(math.sqrt(n)*(der-x)/d)
 		if hip == 'equal':
-			return less+greater
+			return less+1-greater
 		elif hip == 'less':
 			return less
 		elif hip == 'greater':
-			return greater
+			return 1-greater
 
-
-def ph_mean_err2(x, d, n, a, e=None, hip=None, case=None):
+def ph_mean_err2(x, d, n, e, a, hip=None, case=None):
 	if case == 'A':
 		if hip == 'equal':
-			a2 = (1 + a)/2
-			za2 = norm.ppf(a2)
-			der = (za2 + math.sqrt(n)*(x - e)/d)
-			izq = (-za2 + math.sqrt(n)*(x - e)/d)
-			err2 = STD(der) - STD(izq)			
+			c = abs(norm.ppf(a/2))
+			der = c + (math.sqrt(n)*(x - e)/d)
+			izq = -c + (math.sqrt(n)*(x - e)/d)
+			ans = norm.cdf(der) - norm.cdf(izq)
+			return ans
 		elif hip == 'less':
-			za = norm.ppf(a)
-			err2 = STD(za + math.sqrt(n)*(x - e)/d)
+			c = abs(norm.ppf(a))
+			der = c + (math.sqrt(n)*(x - e)/d)
+			return norm.cdf(der)
 		elif hip == 'greater':
-			za = norm.ppf(a)
-			err2 = 1 - STD(-za + math.sqrt(n)*(x - e)/d)
-		return err2
-	
-def ph_n(x, d, om, conf):
-	a = (1 + conf)/2
-	invz = inversefunc(auxz)
-	z = invz(a)
-	n = (2*z*d/om)**2
+			c = abs(norm.ppf(a))
+			izq = -c + (math.sqrt(n)*(x - e)/d)
+			return 1 - norm.cdf(izq)
+
+def ph_mean_n(x, d, e, a, b,  hip=None):
+	if hip == 'equal':
+		za = abs(norm.ppf(a/2))
+	else:
+		za = abs(norm.ppf(a))
+	zb = abs(norm.ppf(b))
+	n = ((za+zb)*d/(x-e))**2
 	return math.ceil(n)
 	
 """
