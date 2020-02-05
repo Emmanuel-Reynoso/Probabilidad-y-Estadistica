@@ -7,7 +7,7 @@ from scipy.stats import lognorm
 from scipy import special
 from scipy import integrate
 from pynverse import inversefunc
-from scipy.stats import t, chi2
+from scipy.stats import t, chi2, norm
 import math
 
 MAX_POISSON = 28
@@ -273,8 +273,9 @@ def auxz(b):
 	return integrate.quad(STD, -b, b)[0]
 	
 def int_conf(x, d, n, conf):
+	a = (1 + conf)/2
 	invz = inversefunc(auxz)
-	z = invz(conf)
+	z = invz(a)
 	izq = "%.3f"%(x - z * d/math.sqrt(n))
 	der = "%.3f"%(x + z * d/math.sqrt(n))
 	ic = (float(izq), float(der))
@@ -282,8 +283,9 @@ def int_conf(x, d, n, conf):
 	return ic, lon
 
 def ic_getN(x, d, om, conf):
+	a = (1 + conf)/2
 	invz = inversefunc(auxz)
-	z = invz(conf)
+	z = invz(a)
 	n = (2*z*d/om)**2
 	return math.ceil(n)
 
@@ -325,6 +327,41 @@ def ic_getdev(x, der, n, conf):
 	d = (der - x)/tv * math.sqrt(n)
 	return d
 
+def ph_mean_err1(x, d, n, izq, der, hip=None, case=None):
+	if case == 'A':
+		less = aprox_prob(x,d,n,b=izq)
+		greater = aprox_prob(x,d,n,a=der)
+		if hip == 'equal':
+			return less+greater
+		elif hip == 'less':
+			return less
+		elif hip == 'greater':
+			return greater
+
+
+def ph_mean_err2(x, d, n, a, e=None, hip=None, case=None):
+	if case == 'A':
+		if hip == 'equal':
+			a2 = (1 + a)/2
+			za2 = norm.ppf(a2)
+			der = (za2 + math.sqrt(n)*(x - e)/d)
+			izq = (-za2 + math.sqrt(n)*(x - e)/d)
+			err2 = STD(der) - STD(izq)			
+		elif hip == 'less':
+			za = norm.ppf(a)
+			err2 = STD(za + math.sqrt(n)*(x - e)/d)
+		elif hip == 'greater':
+			za = norm.ppf(a)
+			err2 = 1 - STD(-za + math.sqrt(n)*(x - e)/d)
+		return err2
+	
+def ph_n(x, d, om, conf):
+	a = (1 + conf)/2
+	invz = inversefunc(auxz)
+	z = invz(a)
+	n = (2*z*d/om)**2
+	return math.ceil(n)
+	
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)
