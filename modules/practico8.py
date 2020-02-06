@@ -53,7 +53,7 @@ def ej2():
 
 def ej3():
 	ans = z_prob(a=1.88)
-	print("a)", "%.2f"%ans)
+	print("a)", "%.4f"%ans)
 	ans = z_prob(b=-2.75)
 	print("b)", "%.3f"%ans)
 	ans = 1 - z_prob(a=-2.88, b=2.88)
@@ -66,7 +66,7 @@ def ej4():
 	e = 95
 
 	a = 0.01
-	if ph_mean_result(x,d,n,94,a,hip='equal', case='A'):
+	if ph_mean_result(x,d,n,e,a,hip='equal', case='A'):
 		print("a) No se rechaza la hopótesis nula porque x no cayó en el RR")
 	x = 94
 	b = ph_mean_err2(x, d, n, e, a, hip='equal', case='A')
@@ -74,3 +74,19 @@ def ej4():
 	b = 0.1
 	c = ph_mean_n(x,d,e,a, b, hip='equal')
 	print("c)", "%.3f"%c)
+
+def ej5():
+	print("a) P(tobs fuera del RR) =", "%.3f"%t.cdf(1.6, 12))
+	print("Prevalece la hipótesis nula. Personalmente me parece que al estar a 0.043 de ser rechazada se debería retomar la prueba\n")
+	print("b) misma conclución que en el inciso b).\n")
+	print("c) P(tobs fuera del RR) =", "%.3f"%t.cdf(2.6, 24))
+	print("   la observacion está en el RR, se rechaza H0.")
+
+def ej6():
+	x = 370.69
+	d = 24.26
+	n = 26
+	e = 360
+	a = ph_mean_err1(x, d, n, e, 1, hip='less', case='C')
+	print("Hay una probabilidad de", "%.3f"%a, "de que dada una media de 360 la media muestral haya resultado 370.69.\n")
+	print("Con un nivel de significación de 0.05 se rechazaría la hipótesis nula.")

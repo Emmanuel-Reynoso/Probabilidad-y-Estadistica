@@ -328,22 +328,42 @@ def ic_getdev(x, der, n, conf):
 	return d
 
 def ph_mean_result(x,d,n,e,a, hip=None, case=None):
-	if case == 'A':
+	if case == 'A' or (case == 'B' and n>29):
 		z = abs(math.sqrt(n)*(x - e)/d)
 		if hip == 'equal':
 			c = abs(norm.ppf(a/2))
 			return 0 < c - z
 		elif hip == 'less':
 			c = abs(norm.ppf(a))
-			return c <= z 
+			return z <= c
 		elif hip == 'greater':
 			c = abs(norm.ppf(a))
-			return z <= -c
+			return c <= -z
+	if case == 'C':
+		ta = abs(math.sqrt(n)*(x - e)/d)
+		if hip == 'equal':
+			c = abs(t.ppf(a/2, n-1))
+			return 0 < c - ta
+		elif hip == 'less':
+			c = abs(t.ppf(a, n-1))
+			return ta <= -c
+		elif hip == 'greater':
+			c = abs(t.ppf(a, n-1))
+			return c <= ta
 
 def ph_mean_err1(x, d, n, izq, der, hip=None, case=None):
 	if case == 'A':
 		less = norm.cdf(math.sqrt(n)*(izq-x)/d)
 		greater = norm.cdf(math.sqrt(n)*(der-x)/d)
+		if hip == 'equal':
+			return less+1-greater
+		elif hip == 'less':
+			return less
+		elif hip == 'greater':
+			return 1-greater
+	if case == 'C':
+		less = t.cdf(math.sqrt(n)*(izq-x)/d, n-1)
+		greater = t.cdf(math.sqrt(n)*(der-x)/d, n-1)
 		if hip == 'equal':
 			return less+1-greater
 		elif hip == 'less':
