@@ -35,17 +35,16 @@ def ej2():
 	print("   estadístico de prueba: Z")
 	izq = 9.8968  
 	der = 10.1032
-	x = 10
 	e = 10
 	d = 0.2
 	n = 25
 	err1 = ph_mean_err1(e,d,n,izq,der,case='A', hip='equal')
 	print("b) P(revisar en vano) =", "%.4f"%err1)
-	e = 10.1
-	err2 = ph_mean_err2(e,d,n,x,err1,case='A', hip='equal')
+	x = 10.1
+	err2 = ph_mean_err2(x,d,n,e,err1,case='A', hip='equal')
 	print("c) P(rechazar revision con μ = 10.1) =", "%.3f"%err2)
-	e = 9.8
-	err2 = ph_mean_err2(e,d,n,x, err1,case='A', hip='equal')
+	x = 9.8
+	err2 = ph_mean_err2(x,d,n,e, err1,case='A', hip='equal')
 	print("   P(rechazar revision con μ = 9.8) =", "%.3f"%err2)
 
 	zde = math.sqrt(n) * (der-10)/d
@@ -64,7 +63,6 @@ def ej4():
 	d = 1.2
 	n = 16
 	e = 95
-
 	a = 0.01
 	if ph_mean_result(x,d,n,e,a,hip='equal', case='A'):
 		print("a) No se rechaza la hopótesis nula porque x no cayó en el RR")
@@ -90,3 +88,32 @@ def ej6():
 	a = ph_mean_err1(x, d, n, e, 1, hip='less', case='C')
 	print("Hay una probabilidad de", "%.3f"%a, "de que dada una media de 360 la media muestral haya resultado 370.69.\n")
 	print("Con un nivel de significación de 0.05 se rechazaría la hipótesis nula.")
+
+def ej7():
+	x = 73.1
+	s = 5.9
+	n = 42
+	e = 75
+	a = 0.01
+	if ph_mean_result(x,s,n,e,a,hip='less', case='B'):
+		print("a) La hipotesis nula prevalece")
+	x = 70
+	b = ph_mean_err2(x,s,n,e,a,hip='less', case='B')
+	print("b)  β(70) =", "%.4f"%b)
+
+def ej8():
+	x = 3.72
+	s = 1.25
+	n = 8
+	e = 3.5
+	a = 0.05
+	if ph_mean_result(x,s,n,e,a,hip='greater', case='C'):
+		print("a) La hipotesis nula prevalece")
+	else:
+		print("a) La hipotesis nula se rechaza")
+	x = 4
+	b = ph_mean_err2(x,s,n,e,a,hip='greater', case='A')
+	print("b) error tipo II =", "%.3f"%b)
+
+def ej9():
+	ans = 0

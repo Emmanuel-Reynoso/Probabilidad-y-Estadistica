@@ -329,30 +329,31 @@ def ic_getdev(x, der, n, conf):
 
 def ph_mean_result(x,d,n,e,a, hip=None, case=None):
 	if case == 'A' or (case == 'B' and n>29):
-		z = abs(math.sqrt(n)*(x - e)/d)
+		z = math.sqrt(n)*(x - e)/d
 		if hip == 'equal':
-			c = abs(norm.ppf(a/2))
-			return 0 < c - z
+			c = norm.ppf(a/2)
+			return abs(z) < c 
 		elif hip == 'less':
-			c = abs(norm.ppf(a))
-			return z <= c
-		elif hip == 'greater':
-			c = abs(norm.ppf(a))
+			c = norm.ppf(a)
+			print(c, z)
 			return c <= -z
-	if case == 'C':
-		ta = abs(math.sqrt(n)*(x - e)/d)
-		if hip == 'equal':
-			c = abs(t.ppf(a/2, n-1))
-			return 0 < c - ta
-		elif hip == 'less':
-			c = abs(t.ppf(a, n-1))
-			return ta <= -c
 		elif hip == 'greater':
-			c = abs(t.ppf(a, n-1))
-			return c <= ta
+			c = norm.ppf(a)
+			return z <= c
+	if case == 'C':
+		ta = math.sqrt(n)*(x - e)/d
+		if hip == 'equal':
+			c = t.ppf(a/2, n-1)
+			return abs(ta) < c
+		elif hip == 'less':
+			c = t.ppf(a, n-1)
+			return c <= -ta
+		elif hip == 'greater':
+			c = t.ppf(a, n-1)
+			return ta <= c
 
 def ph_mean_err1(x, d, n, izq, der, hip=None, case=None):
-	if case == 'A':
+	if case == 'A' or (case == 'B' and n>29):
 		less = norm.cdf(math.sqrt(n)*(izq-x)/d)
 		greater = norm.cdf(math.sqrt(n)*(der-x)/d)
 		if hip == 'equal':
@@ -372,21 +373,21 @@ def ph_mean_err1(x, d, n, izq, der, hip=None, case=None):
 			return 1-greater
 
 def ph_mean_err2(x, d, n, e, a, hip=None, case=None):
-	if case == 'A':
+	if case == 'A' or (case == 'B' and n>29):
 		if hip == 'equal':
 			c = abs(norm.ppf(a/2))
-			der = c + (math.sqrt(n)*(x - e)/d)
-			izq = -c + (math.sqrt(n)*(x - e)/d)
+			der = c + (math.sqrt(n)*(e - x)/d)
+			izq = -c + (math.sqrt(n)*(e - x)/d)
 			ans = norm.cdf(der) - norm.cdf(izq)
 			return ans
 		elif hip == 'less':
 			c = abs(norm.ppf(a))
-			der = c + (math.sqrt(n)*(x - e)/d)
-			return norm.cdf(der)
+			izq = -c + (math.sqrt(n)*(e - x)/d)
+			return 1 - norm.cdf(izq)
 		elif hip == 'greater':
 			c = abs(norm.ppf(a))
-			izq = -c + (math.sqrt(n)*(x - e)/d)
-			return 1 - norm.cdf(izq)
+			der = c + (math.sqrt(n)*(e - x)/d)
+			return norm.cdf(der)
 
 def ph_mean_n(x, d, e, a, b,  hip=None):
 	if hip == 'equal':
