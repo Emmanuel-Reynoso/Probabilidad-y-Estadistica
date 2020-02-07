@@ -327,30 +327,30 @@ def ic_getdev(x, der, n, conf):
 	d = (der - x)/tv * math.sqrt(n)
 	return d
 
+#entra en zona de rechazo?
 def ph_mean_result(x,d,n,e,a, hip=None, case=None):
 	if case == 'A' or (case == 'B' and n>29):
 		z = math.sqrt(n)*(x - e)/d
 		if hip == 'equal':
 			c = norm.ppf(a/2)
-			return abs(z) < c 
+			return abs(c) <= abs(z)  
 		elif hip == 'less':
 			c = norm.ppf(a)
-			print(c, z)
-			return c <= -z
+			return -z <= c
 		elif hip == 'greater':
 			c = norm.ppf(a)
-			return z <= c
+			return c <= z
 	if case == 'C':
 		ta = math.sqrt(n)*(x - e)/d
 		if hip == 'equal':
 			c = t.ppf(a/2, n-1)
-			return abs(ta) < c
+			return abs(c) < abs(ta)
 		elif hip == 'less':
 			c = t.ppf(a, n-1)
-			return c <= -ta
+			return -ta <= c
 		elif hip == 'greater':
 			c = t.ppf(a, n-1)
-			return ta <= c
+			return c <= ta
 
 def ph_mean_err1(x, d, n, izq, der, hip=None, case=None):
 	if case == 'A' or (case == 'B' and n>29):
@@ -398,6 +398,57 @@ def ph_mean_n(x, d, e, a, b,  hip=None):
 	n = ((za+zb)*d/(x-e))**2
 	return math.ceil(n)
 	
+#se fija si entra en la zona de rechazo
+def ph_prop_result(x,p,n,a,hip=None):
+	if n*p >= 10 and n*(1-p) >= 10:
+		z = (x-p)/math.sqrt(p*(1-p)/n)
+		if hip == 'equal':
+			c = norm.ppf(a/2)
+			return abs(c) <= abs(z)  
+		elif hip == 'less':
+			c = norm.ppf(a)
+			return -z <= c
+		elif hip == 'greater':
+			c = norm.ppf(a)
+			return c <= z
+
+def ph_prop_err1(x,y,p,n, hip=None):
+	if n*p >= 10 and n*(1-p) >= 10:
+		less = norm.cdf((x-p)/math.sqrt(p*(1-p)/n))
+		greater = norm.cdf((y-p)/math.sqrt(p*(1-p)/n))
+		if hip == 'equal':
+			return less+1-greater
+		elif hip == 'less':
+			return less
+		elif hip == 'greater':
+			return 1-greater
+
+def ph_prop_err2(x,p,n,a, hip=None):
+	if n*p >= 10 and n*(1-p) >= 10:
+		if hip == 'equal':
+			c = abs(norm.ppf(a/2))
+			der = c*math.sqrt((p*(1-p))/x*(1-x)) + ((p-x)/math.sqrt(p*(1-p)/n))
+			izq = -c*math.sqrt((p*(1-p))/x*(1-x)) + ((p-x)/math.sqrt(p*(1-p)/n))
+			ans = norm.cdf(der) - norm.cdf(izq)
+			return ans
+		elif hip == 'less':
+			c = abs(norm.ppf(a))
+			izq = -c*math.sqrt((p*(1-p))/x*(1-x)) + ((p-x)/math.sqrt(p*(1-p)/n))
+			return 1 - norm.cdf(izq)
+		elif hip == 'greater':
+			c = abs(norm.ppf(a))
+			der = c*math.sqrt((p*(1-p))/x*(1-x)) + ((p-x)/math.sqrt(p*(1-p)/n))
+			return norm.cdf(der)
+
+def ph_prop_n(x, p, a, b,  hip=None):
+	if hip == 'equal':
+		za = abs(norm.ppf(a/2))
+	else:
+		za = abs(norm.ppf(a))
+	zb = abs(norm.ppf(b))
+	n = ((zb*math.sqrt(x*(1-x))+za*math.sqrt(p*(1-p)))/(p-x))**2
+	return math.ceil(n)
+
 """
 def test():
 	bi_prob = binomial_probt(20, 0.2)

@@ -65,7 +65,9 @@ def ej4():
 	e = 95
 	a = 0.01
 	if ph_mean_result(x,d,n,e,a,hip='equal', case='A'):
-		print("a) No se rechaza la hopótesis nula porque x no cayó en el RR")
+		print("a) La hipotesis nula se rechaza")
+	else:
+		print("a) No se rechaza la hipótesis nula porque x no cayó en el RR")
 	x = 94
 	b = ph_mean_err2(x, d, n, e, a, hip='equal', case='A')
 	print("b)", "%.3f"%b)
@@ -96,6 +98,8 @@ def ej7():
 	e = 75
 	a = 0.01
 	if ph_mean_result(x,s,n,e,a,hip='less', case='B'):
+		print("a) La hipotesis nula se rechaza")
+	else:
 		print("a) La hipotesis nula prevalece")
 	x = 70
 	b = ph_mean_err2(x,s,n,e,a,hip='less', case='B')
@@ -108,12 +112,30 @@ def ej8():
 	e = 3.5
 	a = 0.05
 	if ph_mean_result(x,s,n,e,a,hip='greater', case='C'):
-		print("a) La hipotesis nula prevalece")
-	else:
 		print("a) La hipotesis nula se rechaza")
+	else:
+		print("a) La hipotesis nula prevalece")
 	x = 4
 	b = ph_mean_err2(x,s,n,e,a,hip='greater', case='A')
 	print("b) error tipo II =", "%.3f"%b)
 
 def ej9():
-	ans = 0
+	n = 150
+	x = 92/150
+	p = 0.4
+	a = 0.01
+	if ph_prop_result(x,p,n,a,hip='equal'):
+		print("nivel de significancia 0.01: La hipotesis nula se rechaza")
+	else:
+		print("nivel de significancia 0.01: La hipotesis nula prevalece")
+
+	a = 0.05
+	if ph_prop_result(x,p,n,a,hip='equal'):
+		print("nivel de significancia 0.05: La hipotesis nula se rechaza")
+	else:
+		print("nivel de significancia 0.05: La hipotesis nula prevalece")
+
+def ej10():
+	0
+
+
