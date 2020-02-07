@@ -216,3 +216,26 @@ def ej13():
 	else:
 		print("   ii) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
 	
+def ej14():
+	a = 0.02
+	gr = 8
+	tobs = 2
+	pv = 1-t.cdf(tobs,gr)
+	if pv <= a:
+		print("a) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("a) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	gr = 811
+	tobs = -2.4
+	pv = t.cdf(tobs,gr)
+	if pv <= a:
+		print("b) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("b) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	gr = 16
+	tobs = -1.6
+	pv = 2*(1-t.cdf(abs(tobs),gr))
+	if pv <= a:
+		print("c) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("c) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
