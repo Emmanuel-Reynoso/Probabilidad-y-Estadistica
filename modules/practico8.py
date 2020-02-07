@@ -142,7 +142,77 @@ def ej10():
 	a = 0.01
 	d = math.sqrt(p * (1-p))
 	pv = p_value(x,d,n,p,est='Z', hip='less')
+	print("los robots siempre nos van a ganar")
 	if ph_prop_result(x,p,n,a,hip='less'):
 		print("con un p-valor de", "%.4f"%pv," La hipotesis nula se rechaza")
 	else:
 		print("con un p-valor de", "%.4f"%pv," La hipotesis nula prevalece")
+
+def ej11():
+	x = 2.72
+	s = 0.41
+	n = 16
+	e = 2.5
+	a = 0.05
+	pv = p_value(x,s,n,e,est='T', hip='greater')
+	if ph_mean_result(x,s,n,e,a,hip='greater', case='C'):
+		print("con un p-valor de", "%.3f"%pv, "el implante de hormonas es exitoso")
+	else:
+		print("con un p-valor de", "%.3f"%pv, "el implante de hormonas es innecesario")
+
+def ej12():
+	print("a) H0 prevalece")
+	print("b) H0 prevalece")
+	print("c) H0 prevalece")
+	print("d) H0 se rechaza")
+	print("e) H0 prevalece")
+	print("f) H0 prevalece")
+
+def ej13():
+	a = 0.05
+	n = 1
+	d = 1
+	x = 1.42
+	za = norm.ppf(a)
+	za2 = norm.ppf(a/2)
+	pv = 1 - norm.cdf(x)
+	print("a)")
+	if pv < a:
+		print("   i) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("   i) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	x = 2.48
+	pv = 1 - norm.cdf(x)
+	if pv < a:
+		print("   ii) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("   ii) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	
+	x = -1.96
+	pv = norm.cdf(x)
+	print("b)")
+	if pv <= a:
+		print("   i) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("   i) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	x = -0.11
+	pv = norm.cdf(x)
+	if pv <= a:
+		print("   ii) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("   ii) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	
+	x = 2.10
+	pv = 2*(1-norm.cdf(abs(x)))
+	print("c)")
+	if pv <= a:
+		print("   i) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("   i) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	x = -1.75
+	pv = 2*(1-norm.cdf(abs(x)))
+	if pv <= a:
+		print("   ii) con un p-valor de", "%.4f"%pv, "se rechaza la hipótesis nula")
+	else:
+		print("   ii) con un p-valor de", "%.4f"%pv, "prevalece la hipótesis nula")
+	
