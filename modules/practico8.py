@@ -136,6 +136,13 @@ def ej9():
 		print("nivel de significancia 0.05: La hipotesis nula prevalece")
 
 def ej10():
-	0
-
-
+	x = 5/500
+	n = 500
+	p = 0.03
+	a = 0.01
+	d = math.sqrt(p * (1-p))
+	pv = p_value(x,d,n,p,est='Z', hip='less')
+	if ph_prop_result(x,p,n,a,hip='less'):
+		print("con un p-valor de", "%.4f"%pv," La hipotesis nula se rechaza")
+	else:
+		print("con un p-valor de", "%.4f"%pv," La hipotesis nula prevalece")

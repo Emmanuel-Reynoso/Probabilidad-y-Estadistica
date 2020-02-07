@@ -407,10 +407,10 @@ def ph_prop_result(x,p,n,a,hip=None):
 			return abs(c) <= abs(z)  
 		elif hip == 'less':
 			c = norm.ppf(a)
-			return -z <= c
+			return z <= c
 		elif hip == 'greater':
 			c = norm.ppf(a)
-			return c <= z
+			return -c <= z
 
 def ph_prop_err1(x,y,p,n, hip=None):
 	if n*p >= 10 and n*(1-p) >= 10:
@@ -448,6 +448,26 @@ def ph_prop_n(x, p, a, b,  hip=None):
 	zb = abs(norm.ppf(b))
 	n = ((zb*math.sqrt(x*(1-x))+za*math.sqrt(p*(1-p)))/(p-x))**2
 	return math.ceil(n)
+
+def p_value(obs,d,n,e,est=None, hip=None):
+	if est=='Z':
+		z = math.sqrt(n)*(obs - e)/d
+		if hip == 'equal':
+			return 2*(1 - norm.cdf(z))
+		elif hip == 'less':
+			return norm.cdf(z)
+		elif hip == 'greater':
+			return 1 - norm.cdf(z)
+	elif est=='T':
+		tv = math.sqrt(n)*(obs - e)/d
+		if hip == 'equal':
+			return 2*(1 - t.cdf(z, n-1))
+		elif hip == 'less':
+			return t.cdf(z, n-1)
+		elif hip == 'greater':
+			return 1 - t.cdf(z, n-1)
+
+
 
 """
 def test():
