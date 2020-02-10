@@ -461,7 +461,7 @@ def p_value(obs,d,n,e,est=None, hip=None):
 	elif est=='T':
 		tv = math.sqrt(n)*(obs - e)/d
 		if hip == 'equal':
-			return 2*(1 - t.cdf(tv, n-1))
+			return 2*(1 - t.cdf(abs(tv), n-1))
 		elif hip == 'less':
 			return t.cdf(tv, n-1)
 		elif hip == 'greater':
